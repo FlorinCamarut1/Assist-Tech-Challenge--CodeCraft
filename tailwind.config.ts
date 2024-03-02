@@ -13,13 +13,10 @@ const config = {
     container: {
       center: true,
       padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
     },
     extend: {
       backgroundImage: {
-        'login-bg': 'url(/images/bg-img/LoginBg.svg)',
+        codeCraftBg: "url('/images/bg-img/LoginBg.svg')",
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -55,6 +52,11 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        codeCraft: {
+          100: '#CBCEF0',
+          600: '#1C3B72',
+          900: '#061125',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -74,6 +76,11 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+
+      fontFamily: {
+        Raleway: ['Raleway', 'sans-serif'],
+        // Plus_Jakarta_Sans: ['Plus Jakarta Sans', 'sans-serif'],
       },
     },
   },
