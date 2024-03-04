@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '../ui/button';
 import { GiOrganigram } from 'react-icons/gi';
 import { IoIosPersonAdd } from 'react-icons/io';
@@ -9,7 +10,7 @@ const HeroSection = () => {
   return (
     <div>
       {/* Div-ul cu imaginea de fundal, chenar si butoane, folosind Tailwind CSS pentru stilizare */}
-      <div className='bg-heroBg h-[766px] w-full bg-cover bg-center bg-no-repeat'>
+      <div className='h-screen w-full bg-heroBg bg-cover bg-center bg-no-repeat'>
         <div
           className='absolute left-1/2 top-1/2 flex max-w-full -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center gap-5 rounded-lg bg-[rgba(6,17,37,0.75)] p-10 text-center text-white shadow-lg'
           style={{ padding: '40px 80px' }}
