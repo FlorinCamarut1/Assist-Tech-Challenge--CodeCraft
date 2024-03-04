@@ -85,7 +85,7 @@ const LoginForm = ({ className }: RegisterAdminFormProps) => {
             </Button>
           </div>
           <FormFooter
-            message='Or register an organisation account:'
+            message='Or register an organization account:'
             href='/register'
             linkName='Register'
           />
