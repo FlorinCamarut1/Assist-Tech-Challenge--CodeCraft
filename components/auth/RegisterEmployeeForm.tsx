@@ -41,7 +41,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
           onSubmit={form.handleSubmit(formSubmitHandler)}
           className='flex w-auto flex-col gap-5'
         >
-          <FormHeader label='Register to an Organisation' />
+          <FormHeader label='Register to an Organization' />
           <FormField
             control={form.control}
             name='name'

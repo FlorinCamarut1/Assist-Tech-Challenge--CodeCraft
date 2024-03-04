@@ -43,7 +43,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
           onSubmit={form.handleSubmit(formSubmitHandler)}
           className='flex w-auto flex-col gap-5'
         >
-          <FormHeader label='Register New Organisation' />
+          <FormHeader label='Register New Organization' />
           <FormField
             control={form.control}
             name='name'
@@ -95,7 +95,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
             name='organisationName'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Organisation Name*</FormLabel>
+                <FormLabel>Organization Name*</FormLabel>
                 <FormControl>
                   <Input placeholder='Emaple.Org' type='text' {...field} />
                 </FormControl>
@@ -109,7 +109,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
             name='organisationAdress'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Organisation Adress*</FormLabel>
+                <FormLabel>Organization Adress*</FormLabel>
                 <FormControl>
                   <Input
                     placeholder='example street nr:4'
