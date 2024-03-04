@@ -17,6 +17,7 @@ const config = {
     extend: {
       backgroundImage: {
         codeCraftBg: "url('/images/bg-img/LoginBg.svg')",
+        heroBg: "url('/images/bg-img/HeroBackground.png')",
       },
       colors: {
         border: 'hsl(var(--border))',
