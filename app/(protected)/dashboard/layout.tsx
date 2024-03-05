@@ -1,7 +1,7 @@
 'use client';
 
-import MainNavigation from '@/components/navbar/MainNavigation';
-import Sidebar from '@/components/navbar/Sidebar';
+import MainNavigation from '@/components/navigation/MainNavigation';
+import Sidebar from '@/components/navigation/Sidebar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
