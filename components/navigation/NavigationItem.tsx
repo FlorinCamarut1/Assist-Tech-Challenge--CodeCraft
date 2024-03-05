@@ -10,22 +10,19 @@ interface NavigationItem {
 
 const NavigationItem = ({ data }: NavigationItem) => {
   const pathname = usePathname();
-  const active = pathname === data.href;
+  const active = pathname === data?.href;
 
   return (
-    <li
+    <div
       className={clsx(
-        ` cursor-pointer border-b-2 border-transparent  p-2 transition hover:border-blue-200`,
-        active && 'border-gray-200'
+        ` cursor-pointer border-b-2  p-2 transition hover:border-gray-100`,
+        active ? 'border-gray-100' : 'border-codeCraft-900'
       )}
     >
-      <Link
-        href={data.href}
-        className=' text-lg text-white  hover:text-blue-200'
-      >
+      <Link href={data.href} className=' text-lg text-white '>
         {data.title}
       </Link>
-    </li>
+    </div>
   );
 };
 

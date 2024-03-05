@@ -1,3 +1,4 @@
+'use client';
 import { navigationData } from '@/data/navigationData';
 
 import NavigationItem from './NavigationItem';
