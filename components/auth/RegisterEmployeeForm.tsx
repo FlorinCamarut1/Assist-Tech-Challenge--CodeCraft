@@ -18,12 +18,16 @@ import { Button } from '../ui/button';
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
+import { useSearchParams } from 'next/navigation';
 
 interface RegisterEmployeeFormProps {
   className?: string;
 }
 
 const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
+  const params = useSearchParams();
+  const inviteOrganizationId = params.get('invite');
+
   const form = useForm<z.infer<typeof RegisterEmployeeSchema>>({
     resolver: zodResolver(RegisterEmployeeSchema),
     defaultValues: {
@@ -33,7 +37,11 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
     },
   });
 
-  const formSubmitHandler = () => {};
+  const formSubmitHandler = (
+    values: z.infer<typeof RegisterEmployeeSchema>
+  ) => {
+    console.log({ ...values, organizationId: inviteOrganizationId });
+  };
   return (
     <div className={className}>
       <Form {...form}>
