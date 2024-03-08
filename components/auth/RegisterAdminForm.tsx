@@ -13,9 +13,10 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 
-import * as z from 'zod';
 import { Button } from '../ui/button';
 
+import axios from 'axios';
+import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
 
@@ -35,7 +36,16 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
     },
   });
 
-  const formSubmitHandler = () => {};
+  const formSubmitHandler = (values: z.infer<typeof RegisterAdminSchema>) => {
+    axios.post('http://localhost:8000/user', {
+      ...values,
+      role: ['Admin'],
+      organisation: {
+        id: '1122333',
+        name: values.organisationName,
+      },
+    });
+  };
   return (
     <div className={className}>
       <Form {...form}>

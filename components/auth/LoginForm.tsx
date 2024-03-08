@@ -1,8 +1,9 @@
 'use client';
 
-import { RegisterAdminSchema } from '@/schemas';
+import { LoginSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { setSession } from '@/actions/setSession';
 import {
   Form,
   FormControl,
@@ -15,24 +16,40 @@ import { Input } from '../ui/input';
 
 import { Button } from '../ui/button';
 
+import axios from 'axios';
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
+import { useRouter } from 'next/navigation';
 
-interface RegisterAdminFormProps {
+interface LoginFormProps {
   className?: string;
 }
 
-const LoginForm = ({ className }: RegisterAdminFormProps) => {
-  const form = useForm<z.infer<typeof RegisterAdminSchema>>({
-    resolver: zodResolver(RegisterAdminSchema),
+const LoginForm = ({ className }: LoginFormProps) => {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const formSubmitHandler = () => {};
+  const formSubmitHandler = (values: z.infer<typeof LoginSchema>) => {
+    axios.get('http://localhost:8000/user').then((data: any) => {
+      data.data.map((user: any) => {
+        if (user.email === values.email && user.password === values.password) {
+          setSession(data);
+          console.log('auth');
+          router.push('/dashboard');
+        } else {
+          console.log('incorrect password!');
+        }
+      });
+    });
+  };
+
   return (
     <div className={className}>
       <Form {...form}>
