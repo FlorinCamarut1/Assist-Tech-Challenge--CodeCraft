@@ -32,7 +32,7 @@ const HeroSection = () => {
             >
               Register
             </Button>
-            <Button onClick={() => router.push('/register')}>Sign In</Button>
+            <Button onClick={() => router.push('/login')}>Sign In</Button>
           </div>
         </div>
       </div>

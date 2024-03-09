@@ -10,6 +10,12 @@ export const navigationData = [
     isPublic: false,
   },
   {
+    title: 'Logout',
+    href: '*',
+    isPublic: false,
+    onClick: () => {},
+  },
+  {
     title: 'About',
     href: '/about',
     isPublic: true,

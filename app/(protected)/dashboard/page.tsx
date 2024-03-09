@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
 
 const DashboardPage = () => {
-  return <div>Hello dashboard</div>;
+  return <div className='h-full w-full'>Hello dashboard</div>;
 };
 
 export default DashboardPage;

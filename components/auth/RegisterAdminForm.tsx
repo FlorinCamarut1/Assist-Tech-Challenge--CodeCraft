@@ -12,40 +12,54 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-
 import { Button } from '../ui/button';
+import { useState, useTransition } from 'react';
 
 import axios from 'axios';
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
+import FormError from '../ui/FormError';
+import FormSucces from '../ui/FormSuccess';
 
 interface RegisterAdminFormProps {
   className?: string;
 }
 
 const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
   const form = useForm<z.infer<typeof RegisterAdminSchema>>({
     resolver: zodResolver(RegisterAdminSchema),
     defaultValues: {
       name: '',
       email: '',
       password: '',
-      organisationName: '',
-      organisationAdress: '',
+      organizationName: '',
+      organizationAddress: '',
     },
   });
 
   const formSubmitHandler = (values: z.infer<typeof RegisterAdminSchema>) => {
-    axios.post('http://localhost:8000/user', {
-      ...values,
-      role: ['Admin'],
-      organisation: {
-        id: '1122333',
-        name: values.organisationName,
-      },
-    });
+    setIsLoading(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/User/RegisterAdmin`, values)
+      .then((data) => {
+        if (data.request) {
+          setSuccess('Account created succesfully');
+          setIsLoading(false);
+          setError('');
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+        setSuccess('');
+      })
+      .finally(() => setIsLoading(false));
   };
+
   return (
     <div className={className}>
       <Form {...form}>
@@ -61,7 +75,12 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
               <FormItem>
                 <FormLabel>Name*</FormLabel>
                 <FormControl>
-                  <Input placeholder='John Doe' type='text' {...field} />
+                  <Input
+                    placeholder='John Doe'
+                    type='text'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -79,6 +98,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
                     placeholder='johnDoe@example.com'
                     type='email'
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
 
@@ -93,7 +113,12 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
               <FormItem>
                 <FormLabel>Password*</FormLabel>
                 <FormControl>
-                  <Input placeholder='******' type='password' {...field} />
+                  <Input
+                    placeholder='******'
+                    type='password'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -102,12 +127,17 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
           />
           <FormField
             control={form.control}
-            name='organisationName'
+            name='organizationName'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Organization Name*</FormLabel>
                 <FormControl>
-                  <Input placeholder='Emaple.Org' type='text' {...field} />
+                  <Input
+                    placeholder='Emaple.Org'
+                    type='text'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -116,7 +146,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
           />
           <FormField
             control={form.control}
-            name='organisationAdress'
+            name='organizationAddress'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Organization Adress*</FormLabel>
@@ -125,6 +155,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
                     placeholder='example street nr:4'
                     type='text'
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
 
@@ -132,11 +163,14 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
               </FormItem>
             )}
           />
+          {error && <FormError message={error} />}
+          {success && <FormSucces message={success} />}
           <div className='flex justify-center'>
             <Button
               variant='default'
               type='submit'
               className='text flex w-full sm:w-[160px]'
+              disabled={isLoading}
             >
               Submit
             </Button>

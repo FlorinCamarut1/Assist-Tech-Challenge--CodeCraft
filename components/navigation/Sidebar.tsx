@@ -1,5 +1,21 @@
+'use client';
+import { getSession } from '@/actions/getSession';
+
+import AdminInviteBox from './AdminInviteBox';
+import SidebarMenu from './SidebarMenu';
+import useSystemRole from '@/hooks/useSystemRole';
+
 const Sidebar = () => {
-  return <div className=' h-full w-52 bg-gray-400'>Sidebar</div>;
+  const session = getSession();
+  const role = useSystemRole(session?.systemRoleIDs[0]);
+  const adminRole = role?.data?.name === 'Organization Administrator';
+
+  return (
+    <div className=' h-full w-[400px]'>
+      <SidebarMenu />
+      {adminRole && <AdminInviteBox organizationId={session.organizationID} />}
+    </div>
+  );
 };
 
 export default Sidebar;
