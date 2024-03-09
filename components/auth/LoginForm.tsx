@@ -15,18 +15,25 @@ import {
 import { Input } from '../ui/input';
 
 import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import axios from 'axios';
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
-import { useRouter } from 'next/navigation';
+import FormError from '../ui/FormError';
+import FormSucces from '../ui/FormSuccess';
 
 interface LoginFormProps {
   className?: string;
 }
 
 const LoginForm = ({ className }: LoginFormProps) => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -37,17 +44,23 @@ const LoginForm = ({ className }: LoginFormProps) => {
   });
 
   const formSubmitHandler = (values: z.infer<typeof LoginSchema>) => {
-    axios.get('http://localhost:8000/user').then((data: any) => {
-      data.data.map((user: any) => {
-        if (user.email === values.email && user.password === values.password) {
-          setSession(data);
-          console.log('auth');
+    setIsLoading(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/User/Login`, values)
+      .then((data) => {
+        if (data) {
+          setSession(data.data);
+          setSuccess('Logged in succesfully!');
+          setIsLoading(false);
           router.push('/dashboard');
-        } else {
-          console.log('incorrect password!');
+          setError('');
         }
-      });
-    });
+      })
+      .catch((error) => {
+        setError('Invalid credentials!');
+        setSuccess('');
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -70,6 +83,7 @@ const LoginForm = ({ className }: LoginFormProps) => {
                     placeholder='johnDoe@example.com'
                     type='email'
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
 
@@ -84,19 +98,27 @@ const LoginForm = ({ className }: LoginFormProps) => {
               <FormItem>
                 <FormLabel>Password*</FormLabel>
                 <FormControl>
-                  <Input placeholder='******' type='password' {...field} />
+                  <Input
+                    placeholder='******'
+                    type='password'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
+          {error && <FormError message={error} />}
+          {success && <FormSucces message={success} />}
 
           <div className='flex justify-center'>
             <Button
               variant='default'
               type='submit'
               className='text flex w-full sm:w-[160px]'
+              disabled={isLoading}
             >
               Login
             </Button>

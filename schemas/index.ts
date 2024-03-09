@@ -8,8 +8,8 @@ export const RegisterAdminSchema = z.object({
   password: z.string().min(6, {
     message: 'Password length should be at least 6 characters long!',
   }),
-  organisationName: z.string().min(1, { message: requiredMsg }),
-  organisationAdress: z.string().min(1, { message: requiredMsg }),
+  organizationName: z.string().min(1, { message: requiredMsg }),
+  organizationAddress: z.string().min(1, { message: requiredMsg }),
 });
 
 export const RegisterEmployeeSchema = z.object({

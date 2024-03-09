@@ -12,20 +12,27 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-
+import { useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
+import { useState } from 'react';
 
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
-import { useSearchParams } from 'next/navigation';
+import FormError from '../ui/FormError';
+import FormSucces from '../ui/FormSuccess';
+import axios from 'axios';
 
 interface RegisterEmployeeFormProps {
   className?: string;
 }
 
 const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const params = useSearchParams();
+
   const inviteOrganizationId = params.get('invite');
 
   const form = useForm<z.infer<typeof RegisterEmployeeSchema>>({
@@ -40,8 +47,26 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
   const formSubmitHandler = (
     values: z.infer<typeof RegisterEmployeeSchema>
   ) => {
-    console.log({ ...values, organizationId: inviteOrganizationId });
+    setIsLoading(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/User/RegisterEmployee`, {
+        ...values,
+        organizationID: inviteOrganizationId as string,
+      })
+      .then((data) => {
+        if (data.request) {
+          setError('');
+          setSuccess('Account created succesfully!');
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        setError('Something went wrong!');
+        setSuccess('');
+      })
+      .finally(() => setIsLoading(false));
   };
+
   return (
     <div className={className}>
       <Form {...form}>
@@ -57,7 +82,12 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
               <FormItem>
                 <FormLabel>Name*</FormLabel>
                 <FormControl>
-                  <Input placeholder='John Doe' type='text' {...field} />
+                  <Input
+                    placeholder='John Doe'
+                    type='text'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -75,6 +105,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
                     placeholder='johnDoe@example.com'
                     type='email'
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
 
@@ -89,19 +120,26 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
               <FormItem>
                 <FormLabel>Password*</FormLabel>
                 <FormControl>
-                  <Input placeholder='******' type='password' {...field} />
+                  <Input
+                    placeholder='******'
+                    type='password'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
-
+          {error && <FormError message={error} />}
+          {success && <FormSucces message={success} />}
           <div className='flex justify-center'>
             <Button
               variant='default'
               type='submit'
               className='text flex w-full sm:w-[160px]'
+              disabled={isLoading}
             >
               Submit
             </Button>

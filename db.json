@@ -8,11 +8,42 @@
       "organisationName": "test",
       "organisationAdress": "test str",
       "role": [
-        "Admin"
+        "Admin",
+        "Employee"
       ],
       "organisation": {
         "id": "1122333",
         "name": "test"
+      }
+    },
+    {
+      "id": "ea3f",
+      "name": "test2",
+      "email": "test@test1.com",
+      "password": "123456",
+      "organisationName": "test2",
+      "organisationAdress": "test2 str",
+      "role": [
+        "Admin"
+      ],
+      "organisation": {
+        "id": "1122333",
+        "name": "test2"
+      }
+    },
+    {
+      "id": "12b6",
+      "name": "8 Brookford",
+      "email": "florincamarut1996@gmail.com",
+      "password": "12312321321312321",
+      "organisationName": "sadsdasdas",
+      "organisationAdress": "dasdasdasd",
+      "role": [
+        "Admin"
+      ],
+      "organisation": {
+        "id": "1122333",
+        "name": "sadsdasdas"
       }
     }
   ],
