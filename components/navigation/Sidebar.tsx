@@ -11,7 +11,7 @@ const Sidebar = () => {
   const adminRole = role?.data?.name === 'Organization Administrator';
 
   return (
-    <div className=' h-full w-[400px]'>
+    <div className=' flex max-w-[400px] flex-col gap-12'>
       <SidebarMenu />
       {adminRole && <AdminInviteBox organizationId={session.organizationID} />}
     </div>
