@@ -45,7 +45,11 @@ const PaginationSection = ({
         {pages.map((page, index) => (
           <PaginationItem
             key={index}
-            className={currentPage === page ? 'rounded-md bg-neutral-200' : ''}
+            className={
+              currentPage === page
+                ? ' cursor-not-allowed rounded-md bg-neutral-200'
+                : 'cursor-pointer'
+            }
           >
             <PaginationLink onClick={() => setCurrentPage(page)}>
               {page}

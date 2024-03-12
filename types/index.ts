@@ -17,3 +17,19 @@ export type DepartmentType = {
   name: string;
   organizationID: string;
 };
+
+export type UserType = {
+  email: string;
+  password: string;
+  name: string;
+  organizationID: string;
+  departmentID: string | undefined;
+  projectIDs: string | undefined;
+  skills: string | undefined;
+  systemRoleIDs: string[] | undefined;
+  id: string;
+};
+export type SystemRoleType = {
+  id: string;
+  name: string;
+};
