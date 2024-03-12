@@ -1,8 +1,9 @@
 'use client';
 
-import { RegisterAdminSchema } from '@/schemas';
+import { LoginSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { setSession } from '@/actions/setSession';
 import {
   Form,
   FormControl,
@@ -14,25 +15,54 @@ import {
 import { Input } from '../ui/input';
 
 import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
+import axios from 'axios';
 import * as z from 'zod';
 import FormHeader from './FormHeader';
 import FormFooter from './FormFooter';
+import FormError from '../ui/FormError';
+import FormSucces from '../ui/FormSuccess';
 
-interface RegisterAdminFormProps {
+interface LoginFormProps {
   className?: string;
 }
 
-const LoginForm = ({ className }: RegisterAdminFormProps) => {
-  const form = useForm<z.infer<typeof RegisterAdminSchema>>({
-    resolver: zodResolver(RegisterAdminSchema),
+const LoginForm = ({ className }: LoginFormProps) => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const formSubmitHandler = () => {};
+  const formSubmitHandler = (values: z.infer<typeof LoginSchema>) => {
+    setIsLoading(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/User/Login`, values)
+      .then((data) => {
+        if (data) {
+          setSession(data.data);
+          setSuccess('Logged in succesfully!');
+          setIsLoading(false);
+          router.push('/dashboard');
+          setError('');
+        }
+      })
+      .catch((error) => {
+        setError('Invalid credentials!');
+        setSuccess('');
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <div className={className}>
       <Form {...form}>
@@ -53,6 +83,7 @@ const LoginForm = ({ className }: RegisterAdminFormProps) => {
                     placeholder='johnDoe@example.com'
                     type='email'
                     {...field}
+                    disabled={isLoading}
                   />
                 </FormControl>
 
@@ -67,19 +98,27 @@ const LoginForm = ({ className }: RegisterAdminFormProps) => {
               <FormItem>
                 <FormLabel>Password*</FormLabel>
                 <FormControl>
-                  <Input placeholder='******' type='password' {...field} />
+                  <Input
+                    placeholder='******'
+                    type='password'
+                    {...field}
+                    disabled={isLoading}
+                  />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
+          {error && <FormError message={error} />}
+          {success && <FormSucces message={success} />}
 
           <div className='flex justify-center'>
             <Button
               variant='default'
               type='submit'
               className='text flex w-full sm:w-[160px]'
+              disabled={isLoading}
             >
               Login
             </Button>
