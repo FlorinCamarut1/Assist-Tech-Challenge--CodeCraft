@@ -1,15 +1,9 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
-
-// Social media icons URLs
-const tiktokIcon = 'https://i.imgur.com/g3dNUup.png';
-const instagramIcon = 'https://i.imgur.com/HLue3iH.png';
-const facebookIcon = 'https://i.imgur.com/zaWN3Nx.png';
-
-// Contact icons URLs
-const phoneIcon = 'https://i.imgur.com/ALf9Mpn.png';
-const messageIcon = 'https://i.imgur.com/3Rzxtr8.png';
-const locationIcon = 'https://i.imgur.com/Qsun0Fg.png';
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { BsTelephone } from "react-icons/bs";
+import { CiMail } from "react-icons/ci";
+import { IoLocationOutline } from "react-icons/io5";
 
 function Footer() {
   return (
@@ -27,13 +21,13 @@ function Footer() {
             
             {/* Iconite social */}
             <div className="flex mt-4">
-              <img src={tiktokIcon} alt="TikTok" className="h-[22px] w-[22px] mr-4" />
-              <img src={instagramIcon} alt="Instagram" className="h-[22px] w-[22px] mr-4" />
-              <img src={facebookIcon} alt="Facebook" className="h-[22px] w-[22px]" />
+              <FaTiktok className="h-[22px] w-[22px] mr-4" />
+              <FaInstagram className="h-[22px] w-[22px] mr-4" />
+              <FaFacebookF className="h-[22px] w-[22px]" />
             </div>
           </div>
 
-          {/* Coloana "Product Categories"  */}
+          {/* Coloana "Product Categories" */}
           <div className="md:col-span-1">
             <h4 className="font-[Kanit] font-semibold text-[20px] mb-1">Product Categories</h4>
             <div className="border-b border-white mb-4"></div>
@@ -47,7 +41,7 @@ function Footer() {
             </nav>
           </div>
 
-          {/* Coloana "Terms and Policies"  */}
+          {/* Coloana "Terms and Policies" */}
           <div className="md:col-span-1">
             <h4 className="font-[Kanit] font-semibold text-[20px] mb-1">Terms and Policies</h4>
             <div className="border-b border-white mb-4"></div>
@@ -61,32 +55,31 @@ function Footer() {
             </nav>
           </div>
 
-          {/* Coloana "Contact"  */}
+          {/* Coloana "Contact" */}
           <div className="md:col-span-1">
             <h4 className="font-[Kanit] font-semibold text-[20px] mb-1">Contact</h4>
             <div className="border-b border-white mb-4"></div>
             <div className="space-y-2">
               <div className="flex items-center">
-                <img src={phoneIcon} alt="Phone" className="h-[22px] w-[22px] mr-4" />
+                <BsTelephone className="h-[22px] w-[22px] mr-4" />
                 <span className="font-[Kanit] font-normal text-[16px]">(+40) 000 000 00</span>
               </div>
               <div className="flex items-center">
-                <img src={messageIcon} alt="Message" className="h-[22px] w-[22px] mr-4" />
+                <CiMail className="h-[22px] w-[22px] mr-4" />
                 <span className="font-[Kanit] font-normal text-[16px]">codecraft@code.com</span>
               </div>
               <div className="flex items-center">
-                <img src={locationIcon} alt="Location" className="h-[22px] w-[22px] mr-4" />
+                <IoLocationOutline className="h-[22px] w-[22px] mr-4" />
                 <span className="font-[Kanit] font-normal text-[16px]">Strada Universității 13</span>
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Linie de separare */}
         <hr className="border-t border-gray-600 my-8" />
 
-        {/* Copyright  */}
+        {/* Copyright */}
         <div className="text-left text-sm mb-8">
           <p>Copyright © 2024 CodeCraft. All rights reserved.</p>
         </div>
