@@ -7,6 +7,7 @@ import useSystemRole from '@/hooks/useSystemRole';
 
 const Sidebar = () => {
   const session = getSession();
+
   const role = useSystemRole(session?.systemRoleIDs[0]);
   const adminRole = role?.data?.name === 'Organization Administrator';
 
