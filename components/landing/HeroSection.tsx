@@ -3,10 +3,12 @@ import { Button } from '../ui/button';
 import { GiOrganigram } from 'react-icons/gi';
 import { IoIosPersonAdd } from 'react-icons/io';
 import { MdOutlineStackedBarChart } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
 import HeroBottomItem from './HeroBottomItem';
 
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div>
       {/* Div-ul cu imaginea de fundal, chenar si butoane, folosind Tailwind CSS pentru stilizare */}
@@ -23,10 +25,14 @@ const HeroSection = () => {
           </p>
 
           <div className='flex gap-4'>
-            <Button variant='secondary' className=' text-codeCraft-900'>
+            <Button
+              variant='secondary'
+              className=' text-codeCraft-900'
+              onClick={() => router.push('/register')}
+            >
               Register
             </Button>
-            <Button>Sign In</Button>
+            <Button onClick={() => router.push('/login')}>Sign In</Button>
           </div>
         </div>
       </div>

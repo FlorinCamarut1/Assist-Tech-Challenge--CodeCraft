@@ -1,7 +1,7 @@
 'use client';
 
-import MainNavigation from '@/components/navbar/MainNavigation';
-import Sidebar from '@/components/navbar/Sidebar';
+import MainNavigation from '@/components/navigation/MainNavigation';
+import Sidebar from '@/components/navigation/Sidebar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,9 +11,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <>
       <MainNavigation />
-      <div className='flex h-screen w-screen'>
+      <h1 className='px-20 py-7 font-Raleway text-4xl font-semibold'>
+        Welcome to orgName Dashboard
+      </h1>
+      <div className='flex h-full w-full gap-16 px-20 py-10'>
         <Sidebar />
-        <div>{children}</div>
+        <div className='flex-1'>{children}</div>
       </div>
     </>
   );
