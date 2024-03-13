@@ -8,16 +8,16 @@ import React from 'react';
 import RegisterEmployeeForm from '@/components/auth/RegisterEmployeeForm';
 
 const RegisterPage = () => {
-  const params = useSearchParams();
-  const employeeRegister = params.get('invite');
+  // const params = useSearchParams();
+  // const employeeRegister = params.get('invite');
 
   return (
     <div className='relative flex  h-screen w-screen items-center justify-center bg-codeCraft-900 bg-cover bg-no-repeat px-4 sm:bg-codeCraftBg'>
-      {employeeRegister !== null ? (
+      {/* {employeeRegister !== null ? (
         <RegisterEmployeeForm className='w-full max-w-[400px] rounded-lg bg-white px-6 py-10 sm:max-w-[460px]' />
-      ) : (
-        <RegisterAdminForm className='w-full max-w-[400px] rounded-lg bg-white px-6 py-10 sm:max-w-[460px]' />
-      )}
+      ) : ( */}
+      <RegisterAdminForm className='w-full max-w-[400px] rounded-lg bg-white px-6 py-10 sm:max-w-[460px]' />
+      {/* )} */}
       <div className='hidden lg:block xl:w-[800px] 2xl:w-auto'>
         <Image
           className=' h-auto w-auto'
