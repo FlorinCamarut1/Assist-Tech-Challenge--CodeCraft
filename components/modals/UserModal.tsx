@@ -18,12 +18,11 @@ const UserModal = () => {
   const [selected, setSelected] = useState<any>([]);
 
   const handleRoleAssign = () => {
-    axios
-      .put(`${process.env.NEXT_PUBLIC_API}/User`, {
-        ...userData,
-        systemRoleIDs: [selected?.value],
-      })
-      .then((data) => console.log(data));
+    axios.put(`${process.env.NEXT_PUBLIC_API}/User`, {
+      ...userData,
+      systemRoleIDs: [...(userData?.systemRoleIDs as []), selected?.value],
+    });
+    mutateUpdatedRoles();
   };
 
   return (
