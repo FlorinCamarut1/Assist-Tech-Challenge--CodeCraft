@@ -38,3 +38,17 @@ export type TeamRoleType = {
   name: string;
   organizationID: string;
 };
+export type SkillCategoryType = {
+  id: string;
+  name: string;
+  organizationID: string;
+};
+
+export type SkillType = {
+  id: string;
+  skillCategoryID: string;
+  name: string;
+  description: string;
+  authorID: string;
+  departmentID: string;
+};

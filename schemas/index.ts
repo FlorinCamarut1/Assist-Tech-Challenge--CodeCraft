@@ -33,7 +33,11 @@ export const CreateDepartmentSchema = z.object({
 export const EditDepartmentSchema = z.object({
   name: z.string().min(1).optional(),
 });
-export const CreateSkillSchema = z.object({
+export const CreateSkillCategorySchema = z.object({
+  name: z.string().min(1),
+});
+
+export const CreateNewSkillSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
 });

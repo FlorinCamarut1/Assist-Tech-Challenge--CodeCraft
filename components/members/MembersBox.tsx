@@ -2,13 +2,20 @@
 
 import { UserType } from '@/types';
 
-import React from 'react';
+import React, { useState } from 'react';
 import UserBox from './UserBox';
+import PaginationSection from '../ui/PaginationSection';
 
 interface MembersBoxProps {
   userData: UserType[];
 }
 const MembersBox = ({ userData }: MembersBoxProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(9);
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentItems = userData?.slice(firstItemIndex, lastItemIndex);
+
   return (
     <div className='flex flex-col gap-4'>
       <h1 className='font-Raleway text-2xl font-semibold'>
@@ -16,10 +23,18 @@ const MembersBox = ({ userData }: MembersBoxProps) => {
       </h1>
 
       <div className='w-full'>
-        {userData?.map((user: UserType) => (
+        {currentItems?.map((user: UserType) => (
           <UserBox key={user.id} data={user} />
         ))}
       </div>
+      {userData?.length > 8 && (
+        <PaginationSection
+          totalItems={userData?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 };
