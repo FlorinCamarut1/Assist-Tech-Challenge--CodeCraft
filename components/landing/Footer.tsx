@@ -13,11 +13,11 @@ function Footer() {
 
           {/* Logo si descriere */}
           <div className="mb-10 md:mb-0 md:col-span-1">
-            <h2 className="text-[44px] font-bold text-white leading-none">CODE</h2>
-            <h3 className="text-[25.23px] font-extrabold text-white leading-none">&lt; CRAFT &gt;</h3>
-            <p className="font-[Kanit] text-[18px] mt-2 mb-6">Empower Collaboration, Achieve your 
+            <h2 className="px-1 text-4xl text-white'">Team Finder</h2>
+            
+            <p className="font-[Kanit] text-[18px] mt-2 mb-6">Crafting The Future, Together
             <br></br>
-            Projects, codecraft-teams-app.com</p>
+             codecraft-teams-app.com</p>
             
             {/* Iconite social */}
             <div className="flex mt-4">
