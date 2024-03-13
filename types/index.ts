@@ -26,10 +26,15 @@ export type UserType = {
   departmentID: string | undefined;
   projectIDs: string | undefined;
   skills: string | undefined;
-  systemRoleIDs: string[] | undefined;
+  systemRoleIDs: [] | undefined;
   id: string;
 };
 export type SystemRoleType = {
   id: string;
   name: string;
+};
+export type TeamRoleType = {
+  id: string;
+  name: string;
+  organizationID: string;
 };

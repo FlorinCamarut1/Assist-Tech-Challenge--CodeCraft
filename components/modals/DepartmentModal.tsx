@@ -31,11 +31,12 @@ const DepartmentModal = () => {
   const session = getSession();
 
   const departmentModal = useDepartmentModal();
+
   const departmentData = departmentModal.data as DepartmentType;
+
   const { mutate: mutateFetchedDepartments } = useDepartments(
     session?.organizationID
   );
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -56,12 +57,13 @@ const DepartmentModal = () => {
     setIsLoading(true);
 
     axios
-      .put(`${process.env.NEXT_PUBLIC_API}/Department`, {
-        id: departmentData.id,
-        name: name || departmentData.name,
-        managerID: selected?.id,
-        organizationID: departmentData.organizationID,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_API}/Department/AssignDepartmentManager`,
+        {
+          departmentID: departmentData?.id,
+          managerID: selected?.id,
+        }
+      )
       .then((data) => {
         if (data?.request) {
           departmentModal.onClose();

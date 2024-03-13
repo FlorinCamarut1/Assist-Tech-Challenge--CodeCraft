@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import useTeamRoles from '@/hooks/useTeamRoles';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -18,6 +19,11 @@ import * as z from 'zod';
 
 const TeamRoleCreateForm = () => {
   const session = getSession();
+
+  const { mutate: mutateFetchedTeamRoles } = useTeamRoles(
+    session?.organizationID
+  );
+
   const formSchema = z.object({
     name: z.string().min(2, {
       message: 'Skill name must be at least 1 characters.',
@@ -30,10 +36,15 @@ const TeamRoleCreateForm = () => {
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    axios.post(`${process.env.NEXT_PUBLIC_API}/TeamRole`, {
-      ...values,
-      organizationID: session?.organizationID,
-    });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/TeamRole`, {
+        ...values,
+        organizationID: session?.organizationID,
+      })
+      .then((data) => {
+        mutateFetchedTeamRoles();
+        form.reset();
+      });
   };
 
   return (

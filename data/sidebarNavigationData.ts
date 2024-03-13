@@ -3,6 +3,7 @@ import { FaRegBuilding } from 'react-icons/fa';
 import { RiTeamLine } from 'react-icons/ri';
 import { AiOutlineStock } from 'react-icons/ai';
 import { FaProjectDiagram } from 'react-icons/fa';
+import { GiProgression } from 'react-icons/gi';
 
 export const sidebarNavigationData = [
   {
@@ -29,5 +30,10 @@ export const sidebarNavigationData = [
     title: 'Projects',
     href: '/dashboard/project',
     icon: FaProjectDiagram,
+  },
+  {
+    title: 'Skills',
+    href: '/dashboard/skills',
+    icon: GiProgression,
   },
 ];
