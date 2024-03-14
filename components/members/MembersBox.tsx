@@ -11,7 +11,7 @@ interface MembersBoxProps {
 }
 const MembersBox = ({ userData }: MembersBoxProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(9);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = userData?.slice(firstItemIndex, lastItemIndex);
@@ -27,7 +27,7 @@ const MembersBox = ({ userData }: MembersBoxProps) => {
           <UserBox key={user.id} data={user} />
         ))}
       </div>
-      {userData?.length > 8 && (
+      {userData?.length > 5 && (
         <PaginationSection
           totalItems={userData?.length}
           itemsPerPage={itemsPerPage}

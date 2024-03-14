@@ -1,18 +1,18 @@
 'use client';
 import { getSession } from '@/actions/getSession';
+import { useValidateSystemRoles } from '@/context/UserSessionRolesContext';
 
 import AdminInviteBox from './AdminInviteBox';
 import SidebarMenu from './SidebarMenu';
-import useSystemRole from '@/hooks/useSystemRole';
 
 const Sidebar = () => {
   const session = getSession();
 
-  const role = useSystemRole(session?.systemRoleIDs[0]);
-  const adminRole = role?.data?.name === 'Organization Administrator';
+  const role = useValidateSystemRoles();
+  const adminRole = role.state.isAdmin;
 
   return (
-    <div className=' flex max-w-[400px] flex-col gap-12'>
+    <div className=' flex w-full max-w-[400px] flex-col gap-12'>
       <SidebarMenu />
       {adminRole && <AdminInviteBox organizationId={session.organizationID} />}
     </div>

@@ -41,3 +41,12 @@ export const CreateNewSkillSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
 });
+
+export const CreateProjectSchema = z.object({
+  name: z.string().min(1),
+  period: z.string().min(1),
+
+  deadlineDate: z.any(),
+  status: z.string().min(1),
+  description: z.string().min(1),
+});

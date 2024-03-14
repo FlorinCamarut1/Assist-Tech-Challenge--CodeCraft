@@ -17,14 +17,14 @@ import { getSession } from '@/actions/getSession';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import useCreateDepartmentModal from '@/hooks/useCreateDepartmentModal';
+import useCreateDepartmentModal from '@/hooks/departments/useCreateDepartmentModal';
 import Modal from '../ui/Modal';
 import * as z from 'zod';
 import axios from 'axios';
 import FormError from '../ui/FormError';
 import FormSucces from '../ui/FormSuccess';
 
-import useDepartments from '@/hooks/useDepartments';
+import useDepartments from '@/hooks/departments/useDepartments';
 
 const AddDepartmentModal = () => {
   const router = useRouter();

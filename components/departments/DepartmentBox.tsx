@@ -4,7 +4,7 @@ import { FaRegBuilding } from 'react-icons/fa';
 import { DepartmentType } from '@/types';
 import { useMemo, useState } from 'react';
 
-import useDepartmentModal from '@/hooks/useDepartmentModal';
+import useDepartmentModal from '@/hooks/departments/useDepartmentModal';
 import axios from 'axios';
 
 interface DepartmentBoxProps {

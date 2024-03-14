@@ -19,13 +19,13 @@ import { Fragment, useState } from 'react';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 import { PropagateLoader } from 'react-spinners';
 
-import useDepartmentModal from '@/hooks/useDepartmentModal';
+import useDepartmentModal from '@/hooks/departments/useDepartmentModal';
 import Modal from '../ui/Modal';
 import axios from 'axios';
-import useUsers from '@/hooks/useUsers';
+import useUsers from '@/hooks/users/useUsers';
 import FormError from '../ui/FormError';
 import FormSucces from '../ui/FormSuccess';
-import useDepartments from '@/hooks/useDepartments';
+import useDepartments from '@/hooks/departments/useDepartments';
 
 const DepartmentModal = () => {
   const session = getSession();

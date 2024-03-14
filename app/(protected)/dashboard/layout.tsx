@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <h1 className='px-20 py-7 font-Raleway text-4xl font-semibold'>
         Welcome to organization Dashboard
       </h1>
-      <div className='flex h-full w-full gap-16 px-20 py-10'>
+      <div className='flex h-auto w-full gap-16 px-20 py-10'>
         <Sidebar />
         <div className='flex-1'>{children}</div>
       </div>
