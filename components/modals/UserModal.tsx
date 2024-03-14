@@ -20,7 +20,7 @@ const UserModal = () => {
   const userModal = useUserModal();
   const userData = userModal?.data as UserType;
   const { data, mutate: mutateUpdatedRoles } = useSystemRoles();
-  const { mutate: mutateFetchedUsers } = useUsers(session.organizationID);
+  const { mutate: mutateFetchedUsers } = useUsers(session?.organizationID);
 
   const [selected, setSelected] = useState<any>([]);
 
