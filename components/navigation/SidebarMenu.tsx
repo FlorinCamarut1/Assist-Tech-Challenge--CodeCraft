@@ -5,8 +5,8 @@ import SidebarNavItem from './SidebarNavItem';
 const SidebarMenu = () => {
   const [navData, setNavData] = useState(sidebarNavigationData);
   return (
-    <div className='overflow-hidden rounded-sm border-[1px] border-codeCraft-100 bg-white shadow-md '>
-      <h2 className=' text-codeCraft-500 border-b-[1px] border-codeCraft-100 px-5 py-6 text-lg font-semibold'>
+    <div className=' overflow-hidden rounded-sm border-[1px] border-codeCraft-100 bg-white shadow-md'>
+      <h2 className=' border-b-[1px] border-codeCraft-100 px-5 py-6 text-lg font-semibold text-codeCraft-500'>
         My organization
       </h2>
       {navData.map((item) => (

@@ -6,9 +6,9 @@ import { getSession } from '@/actions/getSession';
 import React, { useState } from 'react';
 
 import DepartmentBox from '@/components/departments/DepartmentBox';
-import useDepartments from '@/hooks/useDepartments';
+import useDepartments from '@/hooks/departments/useDepartments';
 import PaginationSection from '@/components/ui/PaginationSection';
-import useCreateDepartmentModal from '@/hooks/useCreateDepartmentModal';
+import useCreateDepartmentModal from '@/hooks/departments/useCreateDepartmentModal';
 import AddDepartmentModal from '@/components/modals/AddDepartmentModal';
 import DepartmentModal from '@/components/modals/DepartmentModal';
 
