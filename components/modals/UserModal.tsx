@@ -33,7 +33,10 @@ const UserModal = () => {
       axios
         .put(`${process.env.NEXT_PUBLIC_API}/User`, {
           ...userData,
-          systemRoleIDs: [...(userData?.systemRoleIDs as []), selected?.value],
+          systemRoleIDs: [
+            ...((userData?.systemRoleIDs as []) || []),
+            selected?.value,
+          ],
         })
         .then((data) => {
           mutateUpdatedRoles();

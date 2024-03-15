@@ -11,6 +11,7 @@ import PaginationSection from '@/components/ui/PaginationSection';
 import useCreateDepartmentModal from '@/hooks/departments/useCreateDepartmentModal';
 import AddDepartmentModal from '@/components/modals/AddDepartmentModal';
 import DepartmentModal from '@/components/modals/DepartmentModal';
+import AssignMembersToDepartmentModal from '@/components/modals/AssignMembersToDepartmentModal';
 
 const DepartmentsPage = () => {
   const session = getSession();
@@ -18,7 +19,7 @@ const DepartmentsPage = () => {
   const { data } = useDepartments(session?.organizationID);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(9);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const createDepartmentModal = useCreateDepartmentModal();
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
@@ -26,6 +27,7 @@ const DepartmentsPage = () => {
 
   return (
     <>
+      <AssignMembersToDepartmentModal />
       <AddDepartmentModal />
       <DepartmentModal />
       <div className='flex flex-col gap-5'>
@@ -44,7 +46,7 @@ const DepartmentsPage = () => {
             <DepartmentBox key={item.id} item={item} />
           ))}
         </div>
-        {data?.length > 8 && (
+        {data?.length > 5 && (
           <PaginationSection
             totalItems={data?.length}
             itemsPerPage={itemsPerPage}
