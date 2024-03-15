@@ -22,12 +22,14 @@ import { CreateProjectSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getSession } from '@/actions/getSession';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
-import { format } from 'date-fns';
-
+import { format, setSeconds } from 'date-fns';
+import {
+  Select as DoubleSelect,
+  SelectItem as DoubleSelectItem,
+} from '@nextui-org/react';
 import {
   Popover,
   PopoverContent,
@@ -41,6 +43,7 @@ import FormError from '../ui/FormError';
 
 import useProjects from '@/hooks/projects/useProjects';
 import useCreateProjectModal from '@/hooks/projects/useCreateDepartmentModal';
+import useSkillsByOrganization from '@/hooks/skills/useSkillsByOrganization';
 
 const AddProjectModal = () => {
   const session = getSession();
@@ -49,7 +52,16 @@ const AddProjectModal = () => {
   const addProjectModal = useCreateProjectModal();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isFixed, setIsFixed] = useState(false);
+  const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
+  const [skillTech, setSkillTech] = useState<any>({
+    skillID: '',
+    minimumLevel: '',
+  });
+  const [skillArray, setSkillArray] = useState<any>([]);
+
+  const handleAddToSkillArray = () => {
+    setSkillArray((prev: any) => [...prev, skillTech]);
+  };
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
     resolver: zodResolver(CreateProjectSchema),
@@ -59,18 +71,24 @@ const AddProjectModal = () => {
       deadlineDate: null,
       status: 'Not Started',
       description: '',
+      technologyStack: [],
+      projectRoles: [],
     },
   });
+
   const isFormValueFixed = form.getValues('period') === 'Fixed';
 
   const onSubmit = (values: z.infer<typeof CreateProjectSchema>) => {
-    axios.post(`${process.env.NEXT_PUBLIC_API}/Project`, {
-      ...values,
-      startDate: new Date(),
-      organizationID: session?.organizationID,
-      projectManagerID: session?.id,
-    });
+    console.log(values);
+    // axios.post(`${process.env.NEXT_PUBLIC_API}/Project`, {
+    //   ...values,
+    //   startDate: new Date(),
+    //   organizationID: session?.organizationID,
+    //   projectManagerID: session?.id,
+    // });
   };
+
+  console.log(skillArray);
   return (
     <Modal isOpen={addProjectModal.isOpen} onClose={addProjectModal.onClose}>
       <Form {...form}>
@@ -211,6 +229,58 @@ const AddProjectModal = () => {
               />
             )}
 
+            <div className=' w-full space-y-2'>
+              <FormLabel>Skill Requirements</FormLabel>
+              <DoubleSelect
+                label='Select a Skill'
+                className='max-w-xs'
+                onChange={(e) =>
+                  setSkillTech((prevData: any) => ({
+                    ...prevData,
+                    skillID: e.target.value,
+                  }))
+                }
+              >
+                {skillsData?.map((skill: any) => (
+                  <DoubleSelectItem key={skill.id} value={skill.id}>
+                    {skill.name}
+                  </DoubleSelectItem>
+                ))}
+              </DoubleSelect>
+              <DoubleSelect
+                label='Level'
+                placeholder='Select a level'
+                className='max-w-xs'
+                onChange={(e) =>
+                  setSkillTech((prevData: any) => ({
+                    ...prevData,
+                    minimumLevel: e.target.value,
+                  }))
+                }
+              >
+                <DoubleSelectItem key='Learn' value='Learn'>
+                  Learn
+                </DoubleSelectItem>
+                <DoubleSelectItem key='Know' value='Know'>
+                  Know
+                </DoubleSelectItem>
+                <DoubleSelectItem key='Do' value='Do'>
+                  Do
+                </DoubleSelectItem>
+                <DoubleSelectItem key='Help' value='Help'>
+                  Help
+                </DoubleSelectItem>
+                <DoubleSelectItem key='Teach' value='Teach'>
+                  Teach
+                </DoubleSelectItem>
+              </DoubleSelect>
+              <div className='flex justify-end'>
+                <Button type='button' onClick={handleAddToSkillArray}>
+                  Add
+                </Button>
+              </div>
+            </div>
+
             <div className='flex items-end justify-end'>
               <Button type='submit' disabled={isLoading}>
                 Submit
@@ -221,6 +291,13 @@ const AddProjectModal = () => {
           </div>
         </form>
       </Form>
+      <div className='mt-4 grid grid-cols-2 rounded-sm bg-slate-100 p-4'>
+        <div>
+          <h3 className=' font-semibold'>Project Skills</h3>
+          <p>{skillArray?.length}</p>
+        </div>
+        <h3 className=' font-semibold'>Project Roles</h3>
+      </div>
     </Modal>
   );
 };
