@@ -52,3 +52,17 @@ export type SkillType = {
   authorID: string;
   departmentID: string;
 };
+export type ProjectType = {
+  id: string;
+  name: string;
+  period: string;
+  startDate: string;
+  deadlineDate: string;
+  status: string;
+  description: string;
+  skillRequirements: [];
+  technologyStack: [];
+  projectManagerID: string;
+  organizationID: string;
+  projectRoles: [];
+};
