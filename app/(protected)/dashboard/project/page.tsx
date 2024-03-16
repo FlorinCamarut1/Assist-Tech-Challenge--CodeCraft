@@ -9,6 +9,7 @@ import PaginationSection from '@/components/ui/PaginationSection';
 import useProjects from '@/hooks/projects/useProjects';
 import AddProjectModal from '@/components/modals/AddProjectModal';
 import useCreateProjectModal from '@/hooks/projects/useCreateDepartmentModal';
+import TeamFinderFilterModal from '@/components/teamfinder/TeamFinderFilter';
 
 const ProjectsPage = () => {
   const session = getSession();
@@ -21,6 +22,7 @@ const ProjectsPage = () => {
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = data?.slice(firstItemIndex, lastItemIndex);
+
   return (
     <>
       <AddProjectModal />
@@ -36,7 +38,7 @@ const ProjectsPage = () => {
             Add new project
           </Button>
         </div>
-        <div className='grid grid-cols-3 '>
+        <div className='grid grid-cols-4 gap-4 '>
           {currentItems?.map((item: any) => (
             <ProjectBox key={item.id} item={item} />
           ))}

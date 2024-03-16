@@ -3,7 +3,10 @@ import fetcher from '@/lib/fetcher';
 
 const useUserById = (id: string) => {
   const url = `${process.env.NEXT_PUBLIC_API}/User/${id}`;
-  const { data, error, isLoading, mutate } = useSWR(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR(
+    () => (!id ? null : url),
+    fetcher
+  );
 
   return { data, error, isLoading, mutate };
 };
