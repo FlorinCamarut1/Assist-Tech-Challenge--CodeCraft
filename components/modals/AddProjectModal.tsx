@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
-import { format, setSeconds } from 'date-fns';
+import { format } from 'date-fns';
 import {
   Select as DoubleSelect,
   SelectItem as DoubleSelectItem,
@@ -44,23 +44,52 @@ import FormError from '../ui/FormError';
 import useProjects from '@/hooks/projects/useProjects';
 import useCreateProjectModal from '@/hooks/projects/useCreateDepartmentModal';
 import useSkillsByOrganization from '@/hooks/skills/useSkillsByOrganization';
+import useTeamRoles from '@/hooks/useTeamRoles';
 
 const AddProjectModal = () => {
   const session = getSession();
-
-  const { mutate: mutateProject } = useProjects(session?.organizationID);
   const addProjectModal = useCreateProjectModal();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
   const [skillTech, setSkillTech] = useState<any>({
     skillID: '',
     minimumLevel: '',
   });
   const [skillArray, setSkillArray] = useState<any>([]);
+  const [projectRole, setProjectRole] = useState({
+    teamRoleID: '',
+    membersCount: 0,
+  });
+  const [projectRolesArray, setProjectRolesArray] = useState<any>([]);
+
+  const { mutate: mutateProject } = useProjects(session?.organizationID);
+  const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
+  const { data: teamRolesData } = useTeamRoles(session?.organizationID);
+
+  let techStackArr = [] as any;
+  let rolesNameArr = [] as any;
+
+  skillArray?.forEach((item: any) => {
+    skillsData.map((skill: any) => {
+      if (skill?.id === item?.skillID) {
+        techStackArr.push({ name: skill.name, experience: item.minimumLevel });
+      }
+    });
+  });
+  projectRolesArray?.forEach((item: any) => {
+    teamRolesData.map((role: any) => {
+      if (role?.id === item?.teamRoleID) {
+        rolesNameArr.push({ name: role.name, count: item.membersCount });
+      }
+    });
+  });
 
   const handleAddToSkillArray = () => {
     setSkillArray((prev: any) => [...prev, skillTech]);
+  };
+  const handleAddToRoleArray = () => {
+    setProjectRolesArray((prev: any) => [...prev, projectRole]);
   };
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
@@ -71,24 +100,28 @@ const AddProjectModal = () => {
       deadlineDate: null,
       status: 'Not Started',
       description: '',
-      technologyStack: [],
-      projectRoles: [],
     },
   });
 
   const isFormValueFixed = form.getValues('period') === 'Fixed';
 
   const onSubmit = (values: z.infer<typeof CreateProjectSchema>) => {
-    console.log(values);
-    // axios.post(`${process.env.NEXT_PUBLIC_API}/Project`, {
-    //   ...values,
-    //   startDate: new Date(),
-    //   organizationID: session?.organizationID,
-    //   projectManagerID: session?.id,
-    // });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/Project`, {
+        ...values,
+        startDate: new Date(),
+        organizationID: session?.organizationID,
+        projectManagerID: session?.id,
+        projectRoles: projectRolesArray,
+        skillRequirements: skillArray,
+        technologyStack: techStackArr,
+      })
+      .then((response) => {
+        mutateProject();
+        addProjectModal.onClose();
+      });
   };
 
-  console.log(skillArray);
   return (
     <Modal isOpen={addProjectModal.isOpen} onClose={addProjectModal.onClose}>
       <Form {...form}>
@@ -258,24 +291,59 @@ const AddProjectModal = () => {
                   }))
                 }
               >
-                <DoubleSelectItem key='Learn' value='Learn'>
-                  Learn
+                <DoubleSelectItem key='Learns' value='Learns'>
+                  Learns
                 </DoubleSelectItem>
-                <DoubleSelectItem key='Know' value='Know'>
-                  Know
+                <DoubleSelectItem key='Knows' value='Knows'>
+                  Knows
                 </DoubleSelectItem>
-                <DoubleSelectItem key='Do' value='Do'>
-                  Do
+                <DoubleSelectItem key='Does' value='Does'>
+                  Does
                 </DoubleSelectItem>
-                <DoubleSelectItem key='Help' value='Help'>
-                  Help
+                <DoubleSelectItem key='Helps' value='Helps'>
+                  Helps
                 </DoubleSelectItem>
-                <DoubleSelectItem key='Teach' value='Teach'>
-                  Teach
+                <DoubleSelectItem key='Teaches' value='Teaches'>
+                  Teaches
                 </DoubleSelectItem>
               </DoubleSelect>
               <div className='flex justify-end'>
                 <Button type='button' onClick={handleAddToSkillArray}>
+                  Add
+                </Button>
+              </div>
+            </div>
+            <div className=' w-full space-y-2'>
+              <FormLabel>Project Roles</FormLabel>
+              <DoubleSelect
+                label='Select a Role'
+                className='max-w-xs'
+                onChange={(e) =>
+                  setProjectRole((prevData: any) => ({
+                    ...prevData,
+                    teamRoleID: e.target.value,
+                  }))
+                }
+              >
+                {teamRolesData?.map((role: any) => (
+                  <DoubleSelectItem key={role.id} value={role.id}>
+                    {role.name}
+                  </DoubleSelectItem>
+                ))}
+              </DoubleSelect>
+              <Input
+                type='number'
+                value={projectRole.membersCount}
+                onChange={(e) =>
+                  setProjectRole((prevData: any) => ({
+                    ...prevData,
+                    membersCount: Number(e.target.value),
+                  }))
+                }
+              />
+
+              <div className='flex justify-end'>
+                <Button type='button' onClick={handleAddToRoleArray}>
                   Add
                 </Button>
               </div>
@@ -294,9 +362,34 @@ const AddProjectModal = () => {
       <div className='mt-4 grid grid-cols-2 rounded-sm bg-slate-100 p-4'>
         <div>
           <h3 className=' font-semibold'>Project Skills</h3>
-          <p>{skillArray?.length}</p>
+          {techStackArr?.map((skill: any) => (
+            <div className='flex gap-2' key={skill.name}>
+              <p>
+                <span className='font-semibold'>Name: </span>
+                {skill.name}
+              </p>
+              <p>
+                <span className='font-semibold'>Exp: </span>
+                {skill.experience}
+              </p>
+            </div>
+          ))}
         </div>
-        <h3 className=' font-semibold'>Project Roles</h3>
+        <div>
+          <h3 className=' font-semibold'>Project Roles</h3>
+          {rolesNameArr.map((role: any) => (
+            <div className='flex gap-2' key={role.name}>
+              <p>
+                <span className='font-semibold'>Role: </span>
+                {role.name}
+              </p>
+              <p>
+                <span className='font-semibold'>Num: </span>
+                {role.count}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </Modal>
   );
