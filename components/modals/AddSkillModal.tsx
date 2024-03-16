@@ -48,7 +48,7 @@ const AddSkillModal = () => {
     resolver: zodResolver(UpdateAccountSkillSchema),
     defaultValues: {
       skillID: '',
-      level: 'Learn',
+      level: 'Learns',
       experience: '0-6 months',
       trainingTitle: '',
       trainingDescription: '',
@@ -125,11 +125,11 @@ const AddSkillModal = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value='Learn'>Learn</SelectItem>
-                    <SelectItem value='Know'>Know</SelectItem>
-                    <SelectItem value='Do'>Do</SelectItem>
-                    <SelectItem value='Help'>Help</SelectItem>
-                    <SelectItem value='Teach'>Teach</SelectItem>
+                    <SelectItem value='Learns'>Learn</SelectItem>
+                    <SelectItem value='Knows'>Know</SelectItem>
+                    <SelectItem value='Does'>Do</SelectItem>
+                    <SelectItem value='Helps'>Help</SelectItem>
+                    <SelectItem value='Teaches'>Teach</SelectItem>
                   </SelectContent>
                 </Select>
 

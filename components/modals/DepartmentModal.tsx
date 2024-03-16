@@ -69,8 +69,6 @@ const DepartmentModal = () => {
     },
   });
 
-  console.log(departmentData);
-
   const onSubmit = (values: z.infer<typeof DepartmentUpdateSchema>) => {
     setIsLoading(true);
 
