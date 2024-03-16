@@ -4,6 +4,7 @@ import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 import { BsTelephone } from "react-icons/bs";
 import { CiMail } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
+import Link from 'next/link';
 
 function Footer() {
   return (
@@ -13,12 +14,11 @@ function Footer() {
 
           {/* Logo si descriere */}
           <div className="mb-10 md:mb-0 md:col-span-1">
-            <h2 className="px-1 text-4xl text-white'">Team Finder</h2>
-            
+            <h2 className="px-1 text-4xl text-white">Team Finder</h2>
             <p className="font-[Kanit] text-[18px] mt-2 mb-6">Crafting The Future, Together
-            <br></br>
-             codecraft-teams-app.com</p>
-            
+              <br />
+              codecraft-teams-app.com
+            </p>
             {/* Iconite social */}
             <div className="flex mt-4">
               <FaTiktok className="h-[22px] w-[22px] mr-4" />
@@ -33,10 +33,15 @@ function Footer() {
             <div className="border-b border-white mb-4"></div>
             <nav>
               <ul className="list-none space-y-2">
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Create organization</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Lorem</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Lorem</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Lorem</li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="/dashboard">Create organization</Link>
+                </li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="/about">About</Link>
+                </li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="#">Accessibility</Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -47,10 +52,18 @@ function Footer() {
             <div className="border-b border-white mb-4"></div>
             <nav>
               <ul className="list-none space-y-2">
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Terms and Conditions</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Politică confidențialitate</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Privacy Policy</li>
-                <li className="font-[Kanit] font-normal text-[16px]">{'>'} Lorem</li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="#">Terms and Conditions</Link>
+                </li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="#">Privacy Policy</Link>
+                </li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="#">Copyright Policy</Link>
+                </li>
+                <li className="font-[Kanit] font-normal text-[16px]">
+                  <Link href="#">Cookie Policy</Link>
+                </li>
               </ul>
             </nav>
           </div>

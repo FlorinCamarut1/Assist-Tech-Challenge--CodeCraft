@@ -4,11 +4,11 @@ import ProfileCard from './ProfileCard';
 
 const Team = () => {
   const teamMembers = [
-    { role: 'Backend Developer (Leader)', name: 'Andreea-Elena Dinco' },
-    { role: 'Backend Developer', name: 'Mihai-Alexandru Pricob' },
-    { role: 'Frontend Developer', name: 'Florin Camarut' },
-    { role: 'Frontend Developer', name: 'Stefan-Alexandru Cozloschi' },
-    { role: 'QA (Tester)', name: 'Maria Ilie' }
+    { role: 'Backend Developer (Leader)', name: 'Andreea-Elena Dinco', imagePath: '/images/bus-img/Andreea.png' },
+    { role: 'Backend Developer', name: 'Mihai-Alexandru Pricob', imagePath: '/images/bus-img/Mihai.png' },
+    { role: 'Frontend Developer', name: 'Florin Camarut', imagePath: '/images/bus-img/Florin.png' },
+    { role: 'Frontend Developer', name: 'Stefan-Alexandru Cozloschi', imagePath: '/images/bus-img/Stefan.png' },
+    { role: 'QA (Tester)', name: 'Maria Ilie', imagePath: '/images/bus-img/Maria.png' }
   ];
 
   return (
@@ -21,7 +21,7 @@ const Team = () => {
               key={index}
               role={member.role}
               name={member.name.replace(/-/g, ' ')}
-              imagePath="/images/bus-img/Business.png" // This will be replaced with each member's image path
+              imagePath={member.imagePath} // Updated with each member's image path
             />
           ))}
         </div>

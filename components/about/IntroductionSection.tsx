@@ -13,7 +13,7 @@ const IntroductionSection = () => {
             </p>
           </div>
           <div className="md:w-1/2 flex justify-end pt-8 mr-8"> {/* Added pt-8 for padding-top */}
-            <Image src="/images/bus-img/Business.png" alt="Business" width={500} height={300} objectFit="contain" />
+          <Image src="/images/bus-img/Business.png" alt="Business" width={500} height={300} objectFit="contain" style={{ borderRadius: '20px' }} />
           </div>
         </div>
       </div>

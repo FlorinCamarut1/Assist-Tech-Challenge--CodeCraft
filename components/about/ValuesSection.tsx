@@ -23,7 +23,7 @@ const ValuesSection = () => {
             </p>
           </div>
           <div className="md:w-1/2 flex justify-end pt-8 mr-8">
-            <Image src="/images/bus-img/Salute.png" alt="Values" width={400} height={300} objectFit="contain" />
+            <Image src="/images/bus-img/Salute.png" alt="Values" width={400} height={300} objectFit="contain" style={{ borderRadius: '20px' }}/>
           </div>
         </div>
       </div>
