@@ -12,6 +12,7 @@ interface ProposalMenuItemProps {
 const DealocationProposalMenuItem = ({
   proposalData,
 }: ProposalMenuItemProps) => {
+  console.log(proposalData);
   const { data: userData } = useUserById(proposalData?.userID);
   const [proposal, setProposal] = useState(proposalData?.accepted);
 
@@ -19,7 +20,7 @@ const DealocationProposalMenuItem = ({
     setProposal((proposal) => !proposal);
 
     axios.post(
-      `${process.env.NEXT_PUBLIC_API}/AcceptDeallocationProposal?id=${proposalData?.id}`
+      `${process.env.NEXT_PUBLIC_API}/DeallocationProposal/AcceptDeallocationProposal?id=${proposalData?.id}`
     );
   };
 

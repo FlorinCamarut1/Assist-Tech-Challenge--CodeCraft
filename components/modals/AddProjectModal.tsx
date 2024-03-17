@@ -49,6 +49,9 @@ import useTeamRoles from '@/hooks/useTeamRoles';
 const AddProjectModal = () => {
   const session = getSession();
   const addProjectModal = useCreateProjectModal();
+  const { mutate: mutateProject } = useProjects(session?.organizationID);
+  const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
+  const { data: teamRolesData } = useTeamRoles(session?.organizationID);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -63,20 +66,19 @@ const AddProjectModal = () => {
   });
   const [projectRolesArray, setProjectRolesArray] = useState<any>([]);
 
-  const { mutate: mutateProject } = useProjects(session?.organizationID);
-  const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
-  const { data: teamRolesData } = useTeamRoles(session?.organizationID);
-
   let techStackArr = [] as any;
+  let techStackNames = [] as any;
   let rolesNameArr = [] as any;
 
   skillArray?.forEach((item: any) => {
     skillsData.map((skill: any) => {
       if (skill?.id === item?.skillID) {
+        techStackNames.push(skill.name);
         techStackArr.push({ name: skill.name, experience: item.minimumLevel });
       }
     });
   });
+
   projectRolesArray?.forEach((item: any) => {
     teamRolesData.map((role: any) => {
       if (role?.id === item?.teamRoleID) {
@@ -114,7 +116,7 @@ const AddProjectModal = () => {
         projectManagerID: session?.id,
         projectRoles: projectRolesArray,
         skillRequirements: skillArray,
-        technologyStack: techStackArr,
+        technologyStack: techStackNames,
       })
       .then((response) => {
         mutateProject();
@@ -122,6 +124,7 @@ const AddProjectModal = () => {
       });
   };
 
+  console.log(techStackArr);
   return (
     <Modal isOpen={addProjectModal.isOpen} onClose={addProjectModal.onClose}>
       <Form {...form}>

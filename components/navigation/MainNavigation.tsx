@@ -28,7 +28,7 @@ const MainNavigation = () => {
 
   return (
     <>
-      <EditProjectModal />
+      {/* <EditProjectModal /> */}
       <div className='h-24 border-b-[1px] border-white bg-codeCraft-900'>
         <nav className='m-auto flex h-full w-full max-w-[1200px] items-center justify-between '>
           <p
