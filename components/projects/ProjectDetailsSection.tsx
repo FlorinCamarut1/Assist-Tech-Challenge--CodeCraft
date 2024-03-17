@@ -5,6 +5,7 @@ import ProjectDetailsBox from './ProjectDetailsBox';
 
 import ProjectTeamsBox from './ProjectTeamsBox';
 import Teamfinder from '../teamfinder/Teamfinder';
+import ProposalsBox from './ProposalsBox';
 
 interface ProjectDetailsSectionProps {
   projectData: ProjectType;
@@ -19,6 +20,7 @@ const ProjectDetailsSection = ({ projectData }: ProjectDetailsSectionProps) => {
         </h1>
         <ProjectDetailsBox projectData={projectData} />
         <ProjectTeamsBox projectData={projectData} />
+        <ProposalsBox projectData={projectData} />
       </div>
       <Teamfinder projectData={projectData} />
     </div>

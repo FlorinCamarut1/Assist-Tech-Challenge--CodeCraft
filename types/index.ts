@@ -66,3 +66,13 @@ export type ProjectType = {
   organizationID: string;
   projectRoles: [];
 };
+export type ProposalType = {
+  accepted: boolean;
+  id: string;
+  projectID: string;
+  teamRoleIDs: string[];
+  userID: string;
+  workHours: number;
+
+  deallocationReason: string;
+};
