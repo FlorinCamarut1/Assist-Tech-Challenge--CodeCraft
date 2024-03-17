@@ -52,7 +52,7 @@ const UserModal = () => {
       <FormError message={error} />
       <div className='flex h-[300px] w-full flex-col gap-3 py-8'>
         <h1 className=' font-Raleway font-semibold text-codeCraft-500'>
-          Chose sytem roles for user:{' '}
+          Chose system roles for user:{' '}
           <span className=' font-bold text-codeCraft-900'>
             {userData?.name}
           </span>

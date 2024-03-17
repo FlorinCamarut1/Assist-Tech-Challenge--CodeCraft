@@ -52,7 +52,7 @@ const AddDepartmentModal = () => {
       })
       .then((data) => {
         if (data.request) {
-          setSuccess('Organization created succesfully!');
+          setSuccess('Organization created successfully!');
           setError('');
           setIsLoading(false);
           addDepartmentModal.onClose();
@@ -61,7 +61,7 @@ const AddDepartmentModal = () => {
           form.reset();
         }
       })
-      .catch((error) => setError('Unable to create organisation!'))
+      .catch((error) => setError('Unable to create organization!'))
       .finally(() => {
         setError('');
         setSuccess('');

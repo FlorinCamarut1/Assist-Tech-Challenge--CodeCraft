@@ -56,7 +56,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
       .then((data) => {
         if (data.request) {
           setError('');
-          setSuccess('Account created succesfully!');
+          setSuccess('Account created successfully!');
           setIsLoading(false);
         }
       })

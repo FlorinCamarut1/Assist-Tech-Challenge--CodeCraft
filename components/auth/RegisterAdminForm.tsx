@@ -48,7 +48,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
       .post(`${process.env.NEXT_PUBLIC_API}/User/RegisterAdmin`, values)
       .then((data) => {
         if (data.request) {
-          setSuccess('Account created succesfully');
+          setSuccess('Account created successfully');
           setIsLoading(false);
           setError('');
         }

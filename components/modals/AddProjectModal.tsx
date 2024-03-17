@@ -124,7 +124,6 @@ const AddProjectModal = () => {
       });
   };
 
-  console.log(techStackArr);
   return (
     <Modal isOpen={addProjectModal.isOpen} onClose={addProjectModal.onClose}>
       <Form {...form}>

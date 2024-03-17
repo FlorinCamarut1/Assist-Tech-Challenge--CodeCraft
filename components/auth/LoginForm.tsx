@@ -50,7 +50,7 @@ const LoginForm = ({ className }: LoginFormProps) => {
       .then((data) => {
         if (data) {
           setSession(data.data);
-          setSuccess('Logged in succesfully!');
+          setSuccess('Logged in successfully!');
           setIsLoading(false);
           router.push('/dashboard');
           setError('');
