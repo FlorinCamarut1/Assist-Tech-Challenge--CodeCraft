@@ -2,9 +2,6 @@ import useTeamRoles from '@/hooks/useTeamRoles';
 import useUserById from '@/hooks/users/useUserById';
 import { ProjectType } from '@/types';
 import { format } from 'date-fns';
-import { Button } from '../ui/button';
-import useCreateDepartmentModal from '@/hooks/departments/useCreateDepartmentModal';
-import useEditProjectModal from '@/hooks/projects/useEditProjectModal';
 
 interface ProjectDetailsBoxProps {
   projectData: ProjectType;
@@ -12,7 +9,6 @@ interface ProjectDetailsBoxProps {
 const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
   const { data: managerData } = useUserById(projectData?.projectManagerID);
   const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
-  const editModal = useEditProjectModal();
 
   let rolesArr = [] as any;
 
@@ -42,7 +38,7 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
             <span className='font-normal'>{managerData?.name}</span>
           </li>
           <li className='font-semibold text-codeCraft-500'>
-            Skill requirements:{' '}
+            Technology stack:{' '}
             {projectData?.technologyStack?.map((tech, index) => (
               <span key={tech} className='font-normal'>
                 {tech}
@@ -79,14 +75,6 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
             Status: <span className='font-normal'>{projectData?.status}</span>
           </li>
         </ul>
-        <Button
-          onClick={() => {
-            editModal.onOpen();
-            editModal.setData(projectData);
-          }}
-        >
-          Edit Project
-        </Button>
       </div>
     </div>
   );
