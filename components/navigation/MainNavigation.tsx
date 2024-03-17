@@ -6,8 +6,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import NavigationItem from './NavigationItem';
 import { useRouter } from 'next/navigation';
-import AddDepartmentModal from '../modals/AddDepartmentModal';
-import EditProjectModal from '../modals/EditProjectModal';
 
 const MainNavigation = () => {
   const router = useRouter();
