@@ -4,6 +4,7 @@ import { RiTeamLine } from 'react-icons/ri';
 import { AiOutlineStock } from 'react-icons/ai';
 import { FaProjectDiagram } from 'react-icons/fa';
 import { GiProgression } from 'react-icons/gi';
+import { MdOutlineVerified } from 'react-icons/md';
 
 export const sidebarNavigationData = [
   {

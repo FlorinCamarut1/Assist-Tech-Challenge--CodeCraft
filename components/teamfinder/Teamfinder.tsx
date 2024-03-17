@@ -61,26 +61,32 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
   }, [filterState]);
 
   return (
-    <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
-      <h1 className=' bg-code text-center font-Raleway text-xl font-bold text-codeCraft-900'>
-        Team Finder
-      </h1>
+    <>
+      <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
+        <h1 className=' bg-code text-center font-Raleway text-xl font-bold text-codeCraft-900'>
+          Team Finder
+        </h1>
 
-      <TeamFinderFilter />
-      <div className=' flex flex-col gap-2 scroll-auto'>
-        {currentItems?.map((item: any) => (
-          <MemberCard key={item?.user?.id} data={item} />
-        ))}
+        <TeamFinderFilter />
+        <div className=' flex flex-col gap-2 scroll-auto'>
+          {currentItems?.map((item: any) => (
+            <MemberCard
+              key={item?.user?.id}
+              data={item}
+              projectData={projectData}
+            />
+          ))}
+        </div>
+        {filteredData?.length > 10 && (
+          <PaginationSection
+            totalItems={filteredData?.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
-      {filteredData?.length > 10 && (
-        <PaginationSection
-          totalItems={filteredData?.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

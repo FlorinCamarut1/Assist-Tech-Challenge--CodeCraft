@@ -1,13 +1,28 @@
+import useTeamRoles from '@/hooks/useTeamRoles';
 import useUserById from '@/hooks/users/useUserById';
 import { ProjectType } from '@/types';
 import { format } from 'date-fns';
+import { Button } from '../ui/button';
+import useCreateDepartmentModal from '@/hooks/departments/useCreateDepartmentModal';
+import useEditProjectModal from '@/hooks/projects/useEditProjectModal';
 
 interface ProjectDetailsBoxProps {
   projectData: ProjectType;
 }
 const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
   const { data: managerData } = useUserById(projectData?.projectManagerID);
-  console.log(projectData);
+  const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
+  const editModal = useEditProjectModal();
+
+  let rolesArr = [] as any;
+
+  projectData?.projectRoles?.forEach((role: any) =>
+    teamRoles?.map((existingRole: any) =>
+      existingRole?.id === role?.teamRoleID
+        ? rolesArr.push(existingRole?.name)
+        : null
+    )
+  );
 
   const formatDate = (date: string) => {
     if (!date) return;
@@ -38,6 +53,15 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
             ))}
           </li>
           <li className='font-semibold text-codeCraft-500'>
+            Project Roles:{' '}
+            {rolesArr?.map((role: any, index: any) => (
+              <span key={role} className='font-normal'>
+                {role}
+                {index === projectData?.projectRoles?.length - 1 ? '' : ' | '}
+              </span>
+            ))}
+          </li>
+          <li className='font-semibold text-codeCraft-500'>
             Created on:{' '}
             <span className='font-normal'>
               {formatDate(projectData?.startDate)}
@@ -55,6 +79,14 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
             Status: <span className='font-normal'>{projectData?.status}</span>
           </li>
         </ul>
+        <Button
+          onClick={() => {
+            editModal.onOpen();
+            editModal.setData(projectData);
+          }}
+        >
+          Edit Project
+        </Button>
       </div>
     </div>
   );
