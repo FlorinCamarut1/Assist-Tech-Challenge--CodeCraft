@@ -65,9 +65,12 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
       return;
     }
     axios
-      .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinder`, filterState)
+      .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinder`, {
+        ...filterState,
+        skillRequirements: projectData?.skillRequirements,
+      })
       .then((response) => setFilteredData(response.data));
-  }, [filterState, teamfinderFilter.isOpenAI]);
+  }, [filterState, teamfinderFilter.isOpenAI, projectData]);
 
   const handleFilterWithAI = () => {
     axios
@@ -79,6 +82,8 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
       })
       .then((response) => setFilteredData(response.data));
   };
+
+  console.log(projectData);
   return (
     <>
       <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
