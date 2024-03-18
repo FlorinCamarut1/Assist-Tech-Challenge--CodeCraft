@@ -69,11 +69,10 @@ const SkillStatisticsPage = () => {
           '#D9D9D9',
           '#CBCEF0',
           '#414959',
-          ,
           '#1C3B72',
           '#061125',
         ],
-        borderColor: ['#D9D9D9', '#CBCEF0', '#414959', , '#1C3B72', '#061125'],
+        borderColor: ['#D9D9D9', '#CBCEF0', '#414959', '#1C3B72', '#061125'],
       },
     ],
   };
@@ -158,10 +157,13 @@ const SkillStatisticsPage = () => {
                 </Select>
                 <div className='mt-10  w-fit justify-between rounded-md border-[1px] shadow-md'>
                   <div className='flex justify-between gap-4 p-2'>
-                    <div className='h-6 w-6 rounded-full bg-[#D9D9D9]' />
-                    <p className=' font-semibold text-codeCraft-500'>
-                      Skill level: <span className='font-normal'>Learning</span>{' '}
-                    </p>
+                    <div className='flex gap-4'>
+                      <div className='h-6 w-6 rounded-full bg-[#D9D9D9]' />
+                      <p className=' font-semibold text-codeCraft-500'>
+                        Skill level:{' '}
+                        <span className='font-normal'>Learning</span>{' '}
+                      </p>
+                    </div>
                     <p className=' font-semibold text-codeCraft-500'>
                       Count:
                       <span className='font-normal'>
@@ -169,11 +171,13 @@ const SkillStatisticsPage = () => {
                       </span>{' '}
                     </p>
                   </div>
-                  <div className='flex justify-between gap-4 p-2'>
-                    <div className='h-6 w-6 rounded-full bg-[#CBCEF0]' />
-                    <p className=' font-semibold text-codeCraft-500'>
-                      Skill level: <span className='font-normal'>Knows</span>{' '}
-                    </p>
+                  <div className='flex  justify-between gap-4 p-2'>
+                    <div className='flex gap-4'>
+                      <div className='h-6 w-6 rounded-full bg-[#CBCEF0]' />
+                      <p className=' font-semibold text-codeCraft-500'>
+                        Skill level: <span className='font-normal'>Knows</span>{' '}
+                      </p>
+                    </div>
                     <p className=' font-semibold text-codeCraft-500'>
                       Count:
                       <span className='font-normal'>
@@ -181,23 +185,29 @@ const SkillStatisticsPage = () => {
                       </span>{' '}
                     </p>
                   </div>
-                  <div className='flex justify-between gap-4 p-2'>
-                    <div className='h-6 w-6 rounded-full bg-[#414959]' />
-                    <p className=' font-semibold text-codeCraft-500'>
-                      Skill level: <span className='font-normal'>Does</span>{' '}
-                    </p>
+                  <div className='flex  justify-between gap-4 p-2'>
+                    <div className='flex  gap-4'>
+                      <div className='flex gap-4'>
+                        <div className='h-6 w-6 rounded-full bg-[#414959]' />
+                        <p className=' font-semibold text-codeCraft-500'>
+                          Skill level: <span className='font-normal'>Does</span>{' '}
+                        </p>
+                      </div>
+                    </div>
                     <p className=' font-semibold text-codeCraft-500'>
                       Count:
-                      <span className='font-normal'>
+                      <span className='justify-end font-normal'>
                         {skillsData?.countOfUsersLevel3}
                       </span>{' '}
                     </p>
                   </div>
-                  <div className='flex justify-between gap-4 p-2'>
-                    <div className='h-6 w-6 rounded-full bg-[#1C3B72]' />
-                    <p className=' font-semibold text-codeCraft-500'>
-                      Skill level: <span className='font-normal'>Helps</span>{' '}
-                    </p>
+                  <div className='flex  justify-between p-2 '>
+                    <div className='flex gap-4'>
+                      <div className='h-6 w-6 rounded-full bg-[#1C3B72]' />
+                      <p className=' font-semibold text-codeCraft-500'>
+                        Skill level: <span className='font-normal'>Helps</span>{' '}
+                      </p>
+                    </div>
                     <p className=' font-semibold text-codeCraft-500'>
                       Count:
                       <span className='font-normal'>
@@ -205,11 +215,14 @@ const SkillStatisticsPage = () => {
                       </span>{' '}
                     </p>
                   </div>
-                  <div className='flex justify-between gap-4 p-2'>
-                    <div className='h-6 w-6 rounded-full bg-[#061125]' />
-                    <p className=' font-semibold text-codeCraft-500'>
-                      Skill level: <span className='font-normal'>Teaches</span>{' '}
-                    </p>
+                  <div className='flex  justify-between p-2'>
+                    <div className='flex gap-4'>
+                      <div className='h-6 w-6 rounded-full bg-[#061125]' />
+                      <p className=' font-semibold text-codeCraft-500'>
+                        Skill level:{' '}
+                        <span className='font-normal'>Teaches</span>{' '}
+                      </p>
+                    </div>
                     <p className=' font-semibold text-codeCraft-500'>
                       Count:
                       <span className='font-normal'>
