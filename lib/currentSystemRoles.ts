@@ -1,12 +1,8 @@
-import { getSession } from '@/actions/getSession';
-
 export const currentSystemRoles = (data: any) => {
   let isAdmin = false;
   let employee = false;
   let depMan = false;
   let projMan = false;
-
-  const session = getSession();
 
   if (!data) return null;
 

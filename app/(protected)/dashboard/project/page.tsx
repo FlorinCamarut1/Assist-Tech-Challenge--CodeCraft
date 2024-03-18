@@ -10,9 +10,14 @@ import useProjects from '@/hooks/projects/useProjects';
 import AddProjectModal from '@/components/modals/AddProjectModal';
 import useCreateProjectModal from '@/hooks/projects/useCreateDepartmentModal';
 import TeamFinderFilterModal from '@/components/teamfinder/TeamFinderFilter';
+import useUserById from '@/hooks/users/useUserById';
+import { currentSystemRoles } from '@/lib/currentSystemRoles';
 
 const ProjectsPage = () => {
   const session = getSession();
+  const { data: currentUser } = useUserById(session?.id);
+
+  const roles = currentSystemRoles(currentUser?.systemRoleIDs);
 
   const { data } = useProjects(session?.organizationID);
 
@@ -30,13 +35,15 @@ const ProjectsPage = () => {
       <div className='flex flex-col gap-5'>
         <div className='flex justify-between'>
           <h1 className='w-full text-2xl font-semibold'>Projects</h1>
-          <Button
-            onClick={() => {
-              createProjectModal.onOpen();
-            }}
-          >
-            Add new project
-          </Button>
+          {roles?.projMan && (
+            <Button
+              onClick={() => {
+                createProjectModal.onOpen();
+              }}
+            >
+              Add new project
+            </Button>
+          )}
         </div>
         <div className='grid grid-cols-4 gap-4 '>
           {currentItems?.map((item: any) => (

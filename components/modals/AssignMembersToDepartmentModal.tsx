@@ -47,13 +47,12 @@ const AssignMembersToDepartmentModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof AssignMembersSchema>) => {
-    axios.post(
-      `${process.env.NEXT_PUBLIC_API}/Department/AddDepartmentMember`,
-      {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/Department/AddDepartmentMember`, {
         ...values,
         departmentID: departmentData?.id,
-      }
-    );
+      })
+      .then((response) => assignMembersToDepartmentModal.onClose());
   };
 
   return (

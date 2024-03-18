@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 interface TeamFinderFilterStore {
+  isOpenAI: boolean;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -18,9 +19,11 @@ interface TeamFinderFilterStore {
   setAvailable: () => void;
   setPastExperience: () => void;
   setWeeks: (data: number) => void;
+  setIsOpenAI: () => void;
 }
 
 const useTeamFinderFilter = create<TeamFinderFilterStore>((set) => ({
+  isOpenAI: false,
   isOpen: false,
   data: {},
   partiallyAvailable: false,
@@ -30,6 +33,16 @@ const useTeamFinderFilter = create<TeamFinderFilterStore>((set) => ({
   pastExperience: false,
   weeks: 0,
 
+  setIsOpenAI: () =>
+    set((prevState) => ({
+      isOpenAI: !prevState.isOpenAI,
+      partiallyAvailable: false,
+      projectsCloseToFinish: false,
+      unavailable: false,
+      available: false,
+      pastExperience: false,
+      weeks: 0,
+    })),
   setPartiallyAvailable: () =>
     set((prevState) => ({ partiallyAvailable: !prevState.partiallyAvailable })),
   setProjectsCloseToFinish: () =>

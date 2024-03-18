@@ -6,9 +6,12 @@ import { MdOutlineStackedBarChart } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 
 import HeroBottomItem from './HeroBottomItem';
+import { getSession } from '@/actions/getSession';
 
 const HeroSection = () => {
   const router = useRouter();
+  const session = getSession();
+
   return (
     <div>
       {/* Div-ul cu imaginea de fundal, chenar si butoane, folosind Tailwind CSS pentru stilizare */}
@@ -24,16 +27,18 @@ const HeroSection = () => {
             Your Ultimate Team Management Solution
           </p>
 
-          <div className='flex gap-4'>
-            <Button
-              variant='secondary'
-              className=' text-codeCraft-900'
-              onClick={() => router.push('/register')}
-            >
-              Register
-            </Button>
-            <Button onClick={() => router.push('/login')}>Sign In</Button>
-          </div>
+          {!session && (
+            <div className='flex gap-4'>
+              <Button
+                variant='secondary'
+                className=' text-codeCraft-900'
+                onClick={() => router.push('/register')}
+              >
+                Register
+              </Button>
+              <Button onClick={() => router.push('/login')}>Sign In</Button>
+            </div>
+          )}
         </div>
       </div>
 

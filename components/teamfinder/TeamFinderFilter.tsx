@@ -22,6 +22,7 @@ const TeamFinderFilter = () => {
         <h3 className='font-semibold'>Filter by:</h3>
         <div className='flex items-center space-x-2'>
           <Checkbox
+            checked={filter.partiallyAvailable}
             id='PartiallyAvailable'
             onCheckedChange={filter.setPartiallyAvailable}
           />
@@ -35,6 +36,7 @@ const TeamFinderFilter = () => {
         {/* 1 */}
         <div className='flex items-center space-x-2'>
           <Checkbox
+            checked={filter.projectsCloseToFinish}
             id='projectsCloseToFinish'
             onCheckedChange={filter.setProjectsCloseToFinish}
           />
@@ -47,7 +49,11 @@ const TeamFinderFilter = () => {
         </div>
         {/* 2 */}
         <div className='flex items-center space-x-2'>
-          <Checkbox id='unavailable' onCheckedChange={filter.setUnavailable} />
+          <Checkbox
+            id='unavailable'
+            onCheckedChange={filter.setUnavailable}
+            checked={filter.unavailable}
+          />
           <label
             htmlFor='unavailable'
             className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
@@ -60,6 +66,7 @@ const TeamFinderFilter = () => {
         {/* 4 */}
         <div className='flex items-center space-x-2'>
           <Checkbox
+            checked={filter.pastExperience}
             id='pastExperience'
             onCheckedChange={filter.setPastExperience}
           />
@@ -68,6 +75,19 @@ const TeamFinderFilter = () => {
             className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
           >
             Past Experience
+          </label>
+        </div>
+        <div className='flex items-center space-x-2'>
+          <Checkbox
+            checked={filter.isOpenAI}
+            id='pastExperience'
+            onCheckedChange={filter.setIsOpenAI}
+          />
+          <label
+            htmlFor='pastExperience'
+            className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+          >
+            Open Ai
           </label>
         </div>
         {/* 5 */}

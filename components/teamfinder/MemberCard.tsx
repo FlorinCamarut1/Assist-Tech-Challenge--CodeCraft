@@ -8,6 +8,7 @@ import MultiSelect from '../ui/MultiSelect';
 import useTeamRoles from '@/hooks/useTeamRoles';
 import clsx from 'clsx';
 import axios from 'axios';
+import useAllocationProposalsByProjectId from '@/hooks/proposals/useAllocationProposalsByProjectId';
 
 interface MemberCardProps {
   data?: any;
@@ -15,12 +16,16 @@ interface MemberCardProps {
 }
 
 const MemberCard = ({ data, projectData }: MemberCardProps) => {
+  const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
+
+  const { mutate: mutateProposal } = useAllocationProposalsByProjectId(
+    projectData?.id
+  );
+
   const [isOpen, setIsOpen] = useState(false);
   const [projectRoles, setProjectRoles] = useState<any>([]);
 
   const [workHours, setWorkHours] = useState(data?.workHours);
-
-  const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
 
   const convertRoleIdToName = (id: any) => {
     const nameMatch = teamRoles.find((role: any) => role?.id === id);
@@ -44,13 +49,18 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
   };
 
   const handleSendProposal = () => {
-    axios.post(`${process.env.NEXT_PUBLIC_API}/AssignmentProposal`, {
-      userID: data?.user.id,
-      projectID: projectData?.id,
-      workHours: workHours,
-      teamRoleIDs: filteredProjectRolesArray,
-      accepted: false,
-    });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/AssignmentProposal`, {
+        userID: data?.user.id,
+        projectID: projectData?.id,
+        workHours: workHours,
+        teamRoleIDs: filteredProjectRolesArray,
+        accepted: false,
+      })
+      .then((response) => {
+        setIsOpen(false);
+        mutateProposal();
+      });
   };
 
   return (

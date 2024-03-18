@@ -1,13 +1,23 @@
 'use client';
 
+import { getSession } from '@/actions/getSession';
+import { getSystemRolesById } from '@/lib/getSystemRolesById';
 import { SidebarNavTypes } from '@/types';
-import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
+import useUserById from '@/hooks/users/useUserById';
+
+import clsx from 'clsx';
+import useSystemRoles from '@/hooks/system-roles/useSystemRoles';
 
 interface SidebarNavItemProps {
   item: SidebarNavTypes;
 }
 const SidebarNavItem = ({ item }: SidebarNavItemProps) => {
+  const session = getSession();
+  const { data: currentUserData } = useUserById(session?.id);
+  const { data: systemRoles } = useSystemRoles();
+  const roles = getSystemRolesById(systemRoles, currentUserData?.systemRoleIDs);
+
   const pathname = usePathname();
   const router = useRouter();
   const Icon = item.icon;
@@ -16,6 +26,19 @@ const SidebarNavItem = ({ item }: SidebarNavItemProps) => {
   const onClick = () => {
     router.push(item.href);
   };
+
+  function hasMatchingRole(rolesData: any, targetRoles: any) {
+    for (const role of rolesData) {
+      if (targetRoles.includes(role)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const hasRole = hasMatchingRole(item.role, roles);
+
+  if (!hasRole) return;
+
   return (
     <div
       className={clsx(
@@ -26,7 +49,7 @@ const SidebarNavItem = ({ item }: SidebarNavItemProps) => {
     >
       <div className='flex gap-3'>
         <Icon size={20} color='#414959' />
-        <p className='text-codeCraft-500 font-semibold'>{item.title}</p>
+        <p className='font-semibold text-codeCraft-500'>{item.title}</p>
       </div>
     </div>
   );

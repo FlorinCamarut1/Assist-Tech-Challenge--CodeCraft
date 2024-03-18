@@ -5,6 +5,8 @@ import { Switch } from '@/components/ui/switch';
 import { useState } from 'react';
 
 import axios from 'axios';
+import useDealocationProposalsByProjectId from '@/hooks/proposals/useDealocationProposalsByProjectId';
+import useTeamsByProjectId from '@/hooks/team/useTeamsByProjectId';
 interface ProposalMenuItemProps {
   proposalData: ProposalType;
 }
@@ -12,16 +14,27 @@ interface ProposalMenuItemProps {
 const DealocationProposalMenuItem = ({
   proposalData,
 }: ProposalMenuItemProps) => {
-  console.log(proposalData);
   const { data: userData } = useUserById(proposalData?.userID);
+  const { mutate: mutateDeallocation } = useDealocationProposalsByProjectId(
+    proposalData?.projectID
+  );
+  const { mutate: mutateprojectTeamData } = useTeamsByProjectId(
+    proposalData?.projectID
+  );
+
   const [proposal, setProposal] = useState(proposalData?.accepted);
 
   const handleAcceptOrDecline = () => {
     setProposal((proposal) => !proposal);
 
-    axios.post(
-      `${process.env.NEXT_PUBLIC_API}/DeallocationProposal/AcceptDeallocationProposal?id=${proposalData?.id}`
-    );
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_API}/DeallocationProposal/AcceptDeallocationProposal?id=${proposalData?.id}`
+      )
+      .then((response) => {
+        mutateDeallocation();
+        mutateprojectTeamData();
+      });
   };
 
   return (

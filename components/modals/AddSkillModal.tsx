@@ -52,7 +52,7 @@ const AddSkillModal = () => {
       experience: '0-6 months',
       trainingTitle: '',
       trainingDescription: '',
-      status: 'Pending',
+      status: 'Accepted',
     },
   });
 

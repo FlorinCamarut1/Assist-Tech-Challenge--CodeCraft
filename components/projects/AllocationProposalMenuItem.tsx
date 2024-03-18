@@ -7,6 +7,9 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 
 import axios from 'axios';
+import useAllocationProposalsByProjectId from '@/hooks/proposals/useAllocationProposalsByProjectId';
+import useDealocationProposalsByProjectId from '@/hooks/proposals/useDealocationProposalsByProjectId';
+import useTeamsByProjectId from '@/hooks/team/useTeamsByProjectId';
 interface ProposalMenuItemProps {
   proposalData: ProposalType;
 }
@@ -14,6 +17,15 @@ interface ProposalMenuItemProps {
 const AllocationProposalMenuItem = ({
   proposalData,
 }: ProposalMenuItemProps) => {
+  const { mutate: mutateAllocation } = useAllocationProposalsByProjectId(
+    proposalData?.projectID
+  );
+  const { mutate: mutateDeAllocation } = useDealocationProposalsByProjectId(
+    proposalData?.projectID
+  );
+  const { mutate: mutateprojectTeamData } = useTeamsByProjectId(
+    proposalData?.projectID
+  );
   const { data: userData } = useUserById(proposalData?.userID);
   const [proposal, setProposal] = useState(proposalData?.accepted);
   const [isDealocating, setIsDealocationg] = useState(false);
@@ -22,9 +34,14 @@ const AllocationProposalMenuItem = ({
   const handleAcceptOrDecline = () => {
     setProposal((proposal) => !proposal);
     if (proposal === false) {
-      axios.post(
-        `${process.env.NEXT_PUBLIC_API}/AssignmentProposal/AcceptAssignmentProposal?id=${proposalData?.id}`
-      );
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_API}/AssignmentProposal/AcceptAssignmentProposal?id=${proposalData?.id}`
+        )
+        .then((response) => {
+          mutateAllocation();
+          mutateprojectTeamData();
+        });
     } else if (proposal === true) {
       setIsDealocationg((alocate) => !alocate);
     }
@@ -32,12 +49,20 @@ const AllocationProposalMenuItem = ({
 
   const handleDealocation = () => {
     if (dealocationReason === '') return;
-    axios.post(`${process.env.NEXT_PUBLIC_API}/DeallocationProposal`, {
-      userID: proposalData?.userID,
-      projectID: proposalData?.projectID,
-      deallocationReason: dealocationReason,
-      accepted: false,
-    });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/DeallocationProposal`, {
+        userID: proposalData?.userID,
+        projectID: proposalData?.projectID,
+        deallocationReason: dealocationReason,
+        accepted: false,
+      })
+      .then((response) => {
+        mutateDeAllocation();
+        mutateAllocation();
+        mutateprojectTeamData();
+        setDealocationReason('');
+        setIsDealocationg(false);
+      });
   };
   return (
     <>

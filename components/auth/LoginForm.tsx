@@ -52,7 +52,7 @@ const LoginForm = ({ className }: LoginFormProps) => {
           setSession(data.data);
           setSuccess('Logged in successfully!');
           setIsLoading(false);
-          router.push('/dashboard');
+          router.push('/dashboard/account');
           setError('');
         }
       })

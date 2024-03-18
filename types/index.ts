@@ -10,6 +10,7 @@ export type SidebarNavTypes = {
   title: string;
   href: string;
   icon: IconType;
+  role: string[];
 };
 export type DepartmentType = {
   id: string;

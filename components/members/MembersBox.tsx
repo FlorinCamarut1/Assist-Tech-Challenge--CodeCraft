@@ -8,8 +8,9 @@ import PaginationSection from '../ui/PaginationSection';
 
 interface MembersBoxProps {
   userData: UserType[];
+  label: string;
 }
-const MembersBox = ({ userData }: MembersBoxProps) => {
+const MembersBox = ({ userData, label }: MembersBoxProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const lastItemIndex = currentPage * itemsPerPage;
@@ -18,9 +19,7 @@ const MembersBox = ({ userData }: MembersBoxProps) => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <h1 className='font-Raleway text-2xl font-semibold'>
-        Organization Members
-      </h1>
+      <h1 className='font-Raleway text-2xl font-semibold'>{label}</h1>
 
       <div className='w-full'>
         {currentItems?.map((user: UserType) => (

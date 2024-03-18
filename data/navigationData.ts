@@ -6,7 +6,7 @@ export const navigationData = [
   },
   {
     title: 'Dashboard',
-    href: '/dashboard',
+    href: '/dashboard/account',
     isPublic: false,
   },
   {

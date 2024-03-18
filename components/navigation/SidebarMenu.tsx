@@ -1,5 +1,6 @@
 import { sidebarNavigationData } from '@/data/sidebarNavigationData';
 import { useState } from 'react';
+
 import SidebarNavItem from './SidebarNavItem';
 
 const SidebarMenu = () => {

@@ -2,6 +2,8 @@
 
 import { ProjectType, UserType } from '@/types';
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 import useTeamFinderFilter from '@/hooks/team-finder/useTeamFinderFilter';
 import TeamFinderFilter from './TeamFinderFilter';
@@ -17,11 +19,14 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [filteredData, setFilteredData] = useState([]);
+  const [additionalContext, setAdditionalContext] = useState('');
+
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = filteredData?.slice(firstItemIndex, lastItemIndex);
 
-  const teamfinderFilterModal = useTeamFinderFilter();
+  const teamfinderFilter = useTeamFinderFilter();
+
   const filterState = useMemo(() => {
     let teamRolesArr = [] as any;
 
@@ -29,13 +34,13 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
       teamRolesArr.push(item?.teamRoleID)
     );
     const data = {
-      partiallyAvailable: teamfinderFilterModal.partiallyAvailable,
-      projectsCloseToFinish: teamfinderFilterModal.projectsCloseToFinish,
-      unavailable: teamfinderFilterModal.unavailable,
+      partiallyAvailable: teamfinderFilter.partiallyAvailable,
+      projectsCloseToFinish: teamfinderFilter.projectsCloseToFinish,
+      unavailable: teamfinderFilter.unavailable,
       available: true,
-      pastExperience: teamfinderFilterModal.pastExperience,
-      weeks: teamfinderFilterModal.projectsCloseToFinish
-        ? teamfinderFilterModal.weeks
+      pastExperience: teamfinderFilter.pastExperience,
+      weeks: teamfinderFilter.projectsCloseToFinish
+        ? teamfinderFilter.weeks
         : 0,
       technologyStack: projectData?.technologyStack,
       teamRoleIDs: teamRolesArr,
@@ -43,23 +48,37 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
     };
     return data;
   }, [
-    teamfinderFilterModal.partiallyAvailable,
-    teamfinderFilterModal.projectsCloseToFinish,
-    teamfinderFilterModal.unavailable,
-    teamfinderFilterModal.pastExperience,
+    teamfinderFilter.partiallyAvailable,
+    teamfinderFilter.projectsCloseToFinish,
+    teamfinderFilter.unavailable,
+    teamfinderFilter.pastExperience,
     projectData?.projectRoles,
-    teamfinderFilterModal.weeks,
+    teamfinderFilter.weeks,
     projectData?.technologyStack,
     projectData?.organizationID,
   ]);
 
   useEffect(() => {
-    if (!filterState?.technologyStack) return;
+    if (!filterState?.technologyStack) {
+      return;
+    } else if (teamfinderFilter.isOpenAI) {
+      return;
+    }
     axios
       .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinder`, filterState)
       .then((response) => setFilteredData(response.data));
-  }, [filterState]);
+  }, [filterState, teamfinderFilter.isOpenAI]);
 
+  const handleFilterWithAI = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinderOpenAI`, {
+        project: {
+          ...projectData,
+          additionalContext: additionalContext,
+        },
+      })
+      .then((response) => setFilteredData(response.data));
+  };
   return (
     <>
       <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
@@ -68,6 +87,18 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
         </h1>
 
         <TeamFinderFilter />
+
+        {teamfinderFilter.isOpenAI && (
+          <div className='flex justify-end gap-2'>
+            <Input
+              type='text'
+              placeholder='Additional content'
+              value={additionalContext}
+              onChange={(e) => setAdditionalContext(e.target.value)}
+            />
+            <Button onClick={handleFilterWithAI}>Filter with AI</Button>
+          </div>
+        )}
         <div className=' flex flex-col gap-2 scroll-auto'>
           {currentItems?.map((item: any) => (
             <MemberCard
