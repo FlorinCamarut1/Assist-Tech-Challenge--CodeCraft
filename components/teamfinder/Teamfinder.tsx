@@ -77,13 +77,12 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
       .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinderOpenAI`, {
         project: {
           ...projectData,
-          additionalContext: additionalContext,
         },
+        additionalContext: additionalContext,
       })
       .then((response) => setFilteredData(response.data));
   };
 
-  console.log(projectData);
   return (
     <>
       <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
