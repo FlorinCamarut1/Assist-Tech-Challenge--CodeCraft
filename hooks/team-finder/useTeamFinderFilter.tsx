@@ -29,7 +29,7 @@ const useTeamFinderFilter = create<TeamFinderFilterStore>((set) => ({
   partiallyAvailable: false,
   projectsCloseToFinish: false,
   unavailable: false,
-  available: false,
+  available: true,
   pastExperience: false,
   weeks: 0,
 
@@ -44,16 +44,45 @@ const useTeamFinderFilter = create<TeamFinderFilterStore>((set) => ({
       weeks: 0,
     })),
   setPartiallyAvailable: () =>
-    set((prevState) => ({ partiallyAvailable: !prevState.partiallyAvailable })),
+    set((prevState) => ({
+      partiallyAvailable: !prevState.partiallyAvailable,
+
+      isOpenAI: false,
+      projectsCloseToFinish: false,
+      unavailable: false,
+      pastExperience: false,
+      weeks: 0,
+    })),
   setProjectsCloseToFinish: () =>
     set((prevState) => ({
       projectsCloseToFinish: !prevState.projectsCloseToFinish,
+      partiallyAvailable: false,
+      isOpenAI: false,
+      unavailable: false,
+      pastExperience: false,
+      weeks: 0,
     })),
   setUnavailable: () =>
-    set((prevState) => ({ unavailable: !prevState.unavailable })),
+    set((prevState) => ({
+      unavailable: !prevState.unavailable,
+      projectsCloseToFinish: false,
+      partiallyAvailable: false,
+      isOpenAI: false,
+
+      pastExperience: false,
+      weeks: 0,
+    })),
   setAvailable: () => set((prevState) => ({ available: !prevState.available })),
   setPastExperience: () =>
-    set((prevState) => ({ pastExperience: !prevState.pastExperience })),
+    set((prevState) => ({
+      pastExperience: !prevState.pastExperience,
+      projectsCloseToFinish: false,
+      partiallyAvailable: false,
+      isOpenAI: false,
+      unavailable: false,
+
+      weeks: 0,
+    })),
   setWeeks: (data: number) => set({ weeks: data }),
   onOpen: () => set({ isOpen: true }),
   onClose: () => {

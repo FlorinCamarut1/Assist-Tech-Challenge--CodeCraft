@@ -34,10 +34,17 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
       teamRolesArr.push(item?.teamRoleID)
     );
     const data = {
+      available:
+        !teamfinderFilter.partiallyAvailable &&
+        !teamfinderFilter.projectsCloseToFinish &&
+        !teamfinderFilter.unavailable &&
+        !teamfinderFilter.pastExperience
+          ? true
+          : false,
       partiallyAvailable: teamfinderFilter.partiallyAvailable,
       projectsCloseToFinish: teamfinderFilter.projectsCloseToFinish,
       unavailable: teamfinderFilter.unavailable,
-      available: true,
+
       pastExperience: teamfinderFilter.pastExperience,
       weeks: teamfinderFilter.projectsCloseToFinish
         ? teamfinderFilter.weeks
