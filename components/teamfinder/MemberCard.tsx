@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { ProjectType } from '@/types';
 import { FaArrowUp } from 'react-icons/fa';
@@ -18,6 +19,8 @@ interface MemberCardProps {
 const MemberCard = ({ data, projectData }: MemberCardProps) => {
   const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
 
+  console.log(teamRoles);
+
   const { mutate: mutateProposal } = useAllocationProposalsByProjectId(
     projectData?.id
   );
@@ -27,10 +30,10 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
 
   const [workHours, setWorkHours] = useState(data?.workHours);
 
-  const convertRoleIdToName = (id: any) => {
-    const nameMatch = teamRoles.find((role: any) => role?.id === id);
-    return nameMatch.name;
-  };
+  // const convertRoleIdToName = (id: any) => {
+  //   const nameMatch = teamRoles.find((role: any) => role?.id === id);
+  //   return nameMatch.name;
+  // };
   let filteredProjectRolesArray = [] as any;
 
   projectRoles?.forEach((item: any) =>
@@ -85,9 +88,9 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
           <MultiSelect
             label='Team Roles'
             // disabled={isPending}
-            options={projectData?.projectRoles?.map((role: any) => ({
-              value: role?.teamRoleID,
-              label: convertRoleIdToName(role?.teamRoleID),
+            options={teamRoles?.map((role: any) => ({
+              value: role?.id,
+              label: role?.name,
             }))}
             onChange={(value: any) => setProjectRoles(value)}
           />
