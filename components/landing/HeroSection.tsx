@@ -27,18 +27,16 @@ const HeroSection = () => {
             Your Ultimate Team Management Solution
           </p>
 
-          {!session && (
-            <div className='flex gap-4'>
-              <Button
-                variant='secondary'
-                className=' text-codeCraft-900'
-                onClick={() => router.push('/register')}
-              >
-                Register
-              </Button>
-              <Button onClick={() => router.push('/login')}>Sign In</Button>
-            </div>
-          )}
+          <div className='flex gap-4'>
+            <Button
+              variant='secondary'
+              className=' text-codeCraft-900'
+              onClick={() => router.push('/register')}
+            >
+              Register
+            </Button>
+            <Button onClick={() => router.push('/login')}>Sign In</Button>
+          </div>
         </div>
       </div>
 

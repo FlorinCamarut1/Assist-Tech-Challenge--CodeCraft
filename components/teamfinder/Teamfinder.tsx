@@ -75,12 +75,10 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
   const handleFilterWithAI = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API}/User/TeamFinderOpenAI`, {
-        project: {
-          ...projectData,
-        },
+        project: projectData,
         additionalContext: additionalContext,
       })
-      .then((response) => setFilteredData(response.data));
+      .then((response) => setFilteredData(response?.data));
   };
 
   return (
