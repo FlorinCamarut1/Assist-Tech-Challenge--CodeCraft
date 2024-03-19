@@ -19,8 +19,6 @@ interface MemberCardProps {
 const MemberCard = ({ data, projectData }: MemberCardProps) => {
   const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
 
-  console.log(teamRoles);
-
   const { mutate: mutateProposal } = useAllocationProposalsByProjectId(
     projectData?.id
   );
