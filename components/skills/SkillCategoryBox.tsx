@@ -2,11 +2,11 @@
 
 import { SkillCategoryType } from '@/types';
 import { IoMdClose } from 'react-icons/io';
+import { getSession } from '@/actions/getSession';
 
 import axios from 'axios';
 import useSkillCategory from '@/hooks/skills/useSkillCategory';
 import useSkillsModal from '@/hooks/skills/useSkillsModal';
-import { getSession } from '@/actions/getSession';
 
 interface SkillRoleBoxProps {
   data: SkillCategoryType;

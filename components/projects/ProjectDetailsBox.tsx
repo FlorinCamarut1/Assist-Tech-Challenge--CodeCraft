@@ -1,3 +1,4 @@
+import useSkillsByOrganization from '@/hooks/skills/useSkillsByOrganization';
 import useTeamRoles from '@/hooks/useTeamRoles';
 import useUserById from '@/hooks/users/useUserById';
 import { ProjectType } from '@/types';
@@ -9,6 +10,9 @@ interface ProjectDetailsBoxProps {
 const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
   const { data: managerData } = useUserById(projectData?.projectManagerID);
   const { data: teamRoles } = useTeamRoles(projectData?.organizationID);
+  const { data: skillsOrg } = useSkillsByOrganization(
+    projectData?.organizationID
+  );
 
   let rolesArr = [] as any;
 
@@ -24,6 +28,13 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
     if (!date) return;
     const newDate = format(new Date(date), 'dd MMMM yyyy');
     return newDate;
+  };
+
+  const getSkillById = (id: any) => {
+    const skillName = skillsOrg?.map((skill: any) =>
+      skill.id === id ? skill.name : undefined
+    );
+    return skillName;
   };
 
   return (
@@ -58,7 +69,7 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
             ))}
           </li>
           <li className='font-semibold text-codeCraft-500'>
-            Created on:{' '}
+            Start Date:{' '}
             <span className='font-normal'>
               {formatDate(projectData?.startDate)}
             </span>
@@ -66,14 +77,29 @@ const ProjectDetailsBox = ({ projectData }: ProjectDetailsBoxProps) => {
           <li className='font-semibold text-codeCraft-500'>
             Deadline:{' '}
             <span className='font-normal'>
-              {projectData?.deadlineDate !== ''
+              {projectData?.deadlineDate !== null
                 ? formatDate(projectData?.deadlineDate)
-                : 'on going'}
+                : 'Not assigned'}
             </span>
           </li>
           <li className='font-semibold text-codeCraft-500'>
             Status: <span className='font-normal'>{projectData?.status}</span>
           </li>
+          <li className='font-semibold text-codeCraft-500'>
+            Period: <span className='font-normal'>{projectData?.period}</span>
+          </li>
+          {projectData?.skillRequirements?.map((skillReq: any) => (
+            <li
+              key={skillReq.skillID}
+              className='font-semibold text-codeCraft-500'
+            >
+              Skill Requirements: {getSkillById(skillReq?.skillID)} |
+              <span className='font-normal'>
+                {' '}
+                Minimum Level: {skillReq?.minimumLevel}
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

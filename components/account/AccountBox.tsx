@@ -17,9 +17,6 @@ interface AccountBoxProps {
 }
 
 const AccountBox = ({ currentUserData }: AccountBoxProps) => {
-  const session = getSession();
-  const { data: currentUser } = useUserById(session?.id);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const lastItemIndex = currentPage * itemsPerPage;
@@ -35,7 +32,7 @@ const AccountBox = ({ currentUserData }: AccountBoxProps) => {
 
   const systemRoles = getSystemRolesById(
     SystemRolesData,
-    session?.systemRoleIDs
+    currentUserData?.systemRoleIDs
   );
 
   return (
@@ -60,7 +57,11 @@ const AccountBox = ({ currentUserData }: AccountBoxProps) => {
       </p>
       <h2 className=' text-lg font-semibold text-codeCraft-500'>Skills</h2>
       {currentItems?.map((skill: any) => (
-        <SKillBox key={skill.skillID} data={skill} currentUser={currentUser} />
+        <SKillBox
+          key={skill.skillID}
+          data={skill}
+          currentUser={currentUserData}
+        />
       ))}
       {currentUserData?.skills?.length > 2 && (
         <PaginationSection

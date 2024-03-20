@@ -49,6 +49,7 @@ import useTeamRoles from '@/hooks/useTeamRoles';
 const AddProjectModal = () => {
   const session = getSession();
   const addProjectModal = useCreateProjectModal();
+  const [techStack, setTechStack] = useState('');
   const { mutate: mutateProject } = useProjects(session?.organizationID);
   const { data: skillsData } = useSkillsByOrganization(session?.organizationID);
   const { data: teamRolesData } = useTeamRoles(session?.organizationID);
@@ -65,6 +66,7 @@ const AddProjectModal = () => {
     membersCount: 0,
   });
   const [projectRolesArray, setProjectRolesArray] = useState<any>([]);
+  const [techStackArray, setTechStackArray] = useState<any>([]);
 
   let techStackArr = [] as any;
   let techStackNames = [] as any;
@@ -99,6 +101,7 @@ const AddProjectModal = () => {
     defaultValues: {
       name: '',
       period: 'Ongoing',
+      startDate: null,
       deadlineDate: null,
       status: 'Not Started',
       description: '',
@@ -111,14 +114,15 @@ const AddProjectModal = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API}/Project`, {
         ...values,
-        startDate: new Date(),
         organizationID: session?.organizationID,
         projectManagerID: session?.id,
         projectRoles: projectRolesArray,
         skillRequirements: skillArray,
-        technologyStack: techStackNames,
+        technologyStack: techStackArray,
       })
       .then((response) => {
+        form.reset();
+        setTechStackArray([]);
         mutateProject();
         addProjectModal.onClose();
       });
@@ -209,9 +213,6 @@ const AddProjectModal = () => {
                     <SelectContent>
                       <SelectItem value='Not Started'>Not Started</SelectItem>
                       <SelectItem value='Starting'>Starting </SelectItem>
-                      <SelectItem value='In Progress'>In Progress </SelectItem>
-                      <SelectItem value='Closing'>Closing </SelectItem>
-                      <SelectItem value='Closed'>Closed </SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -263,8 +264,49 @@ const AddProjectModal = () => {
                 )}
               />
             )}
+            <FormField
+              control={form.control}
+              name='startDate'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Start Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'w-[240px] pl-3 text-left font-normal',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, 'PPP')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-auto p-0' align='start'>
+                      <Calendar
+                        mode='single'
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < new Date() || date < new Date('1900-01-01')
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
 
-            <div className=' w-full space-y-2'>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className=' w-full space-y-2 rounded-sm border-[1px] border-neutral-200 p-2'>
               <FormLabel>Skill Requirements</FormLabel>
               <DoubleSelect
                 label='Select a Skill'
@@ -315,7 +357,7 @@ const AddProjectModal = () => {
                 </Button>
               </div>
             </div>
-            <div className=' w-full space-y-2'>
+            <div className=' flex w-full flex-col justify-between space-y-2 rounded-sm border-[1px] border-neutral-200 p-2'>
               <FormLabel>Project Roles</FormLabel>
               <DoubleSelect
                 label='Select a Role'
@@ -350,28 +392,54 @@ const AddProjectModal = () => {
                 </Button>
               </div>
             </div>
+          </div>
 
-            <div className='flex items-end justify-end'>
-              <Button type='submit' disabled={isLoading}>
-                Submit
+          <div className='flex flex-col gap-2 rounded-sm border-[1px] border-neutral-200'>
+            <div className='flex gap-2'>
+              <Input
+                placeholder='Add project Technology stack'
+                onChange={(e) => setTechStack(e.target.value)}
+              />
+              <Button
+                type='button'
+                onClick={() =>
+                  setTechStackArray((prev: any) => [...prev, techStack])
+                }
+              >
+                Add
               </Button>
             </div>
-
-            {error && <FormError message={error} />}
+            <div className='flex flex-col gap-1 '>
+              {techStackArray?.map((item: any) => (
+                <span
+                  className=' rounded-md bg-slate-100 p-1'
+                  key={Math.random()}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+          {/* tech stack add */}
+          <div className='flex items-end justify-end'>
+            <Button type='submit' disabled={isLoading}>
+              Submit
+            </Button>
           </div>
         </form>
       </Form>
+      {error && <FormError message={error} />}
       <div className='mt-4 grid grid-cols-2 rounded-sm bg-slate-100 p-4'>
         <div>
           <h3 className=' font-semibold'>Project Skills</h3>
           {techStackArr?.map((skill: any) => (
             <div className='flex gap-2' key={skill.name}>
-              <p>
-                <span className='font-semibold'>Name: </span>
+              <p className='text-xs'>
+                <span className='text-xs font-semibold'>Name: </span>
                 {skill.name}
               </p>
-              <p>
-                <span className='font-semibold'>Exp: </span>
+              <p className='text-xs'>
+                <span className='text-xs font-semibold'>Exp: </span>
                 {skill.experience}
               </p>
             </div>
@@ -381,12 +449,12 @@ const AddProjectModal = () => {
           <h3 className=' font-semibold'>Project Roles</h3>
           {rolesNameArr.map((role: any) => (
             <div className='flex gap-2' key={role.name}>
-              <p>
-                <span className='font-semibold'>Role: </span>
+              <p className='text-xs'>
+                <span className='text-xs font-semibold'>Role: </span>
                 {role.name}
               </p>
-              <p>
-                <span className='font-semibold'>Num: </span>
+              <p className='text-xs'>
+                <span className='text-xs font-semibold'>Num: </span>
                 {role.count}
               </p>
             </div>

@@ -74,6 +74,6 @@ export type ProposalType = {
   teamRoleIDs: string[];
   userID: string;
   workHours: number;
-
+  comments: string;
   deallocationReason: string;
 };

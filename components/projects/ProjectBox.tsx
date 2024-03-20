@@ -11,6 +11,7 @@ interface ProjectBoxProps {
 
 const ProjectBox = ({ item }: ProjectBoxProps) => {
   const { data: projectManagerData } = useUserById(item?.projectManagerID);
+
   const router = useRouter();
   const dateFormat = format(new Date(item?.deadlineDate), 'dd MMMM yyyy');
   return (
@@ -26,7 +27,7 @@ const ProjectBox = ({ item }: ProjectBoxProps) => {
       </p>
       <p className=' text-xs text-codeCraft-500'>
         <span className='font-semibold'>Project Deadline: </span>
-        {item?.deadlineDate !== '' ? dateFormat : 'Ongoing'}
+        {item?.deadlineDate !== null ? dateFormat : 'Ongoing'}
       </p>
     </div>
   );

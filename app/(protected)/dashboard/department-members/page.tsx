@@ -2,7 +2,8 @@
 
 import { getSession } from '@/actions/getSession';
 
-import MembersBox from '@/components/members/MembersBox';
+import DepartmentMembersBox from '@/components/department-members/DepartmentMembersBox';
+
 import useUserById from '@/hooks/users/useUserById';
 import useUsersByDepartmentId from '@/hooks/users/useUsersByDepartmentId';
 import React from 'react';
@@ -17,7 +18,10 @@ const DepartmentMembers = () => {
 
   return (
     <div>
-      <MembersBox userData={departmentMembers} label='Department members' />
+      <DepartmentMembersBox
+        userData={departmentMembers}
+        label='Department members'
+      />
     </div>
   );
 };

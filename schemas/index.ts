@@ -45,7 +45,7 @@ export const CreateNewSkillSchema = z.object({
 export const CreateProjectSchema = z.object({
   name: z.string(),
   period: z.string(),
-
+  startDate: z.any().optional(),
   deadlineDate: z.any().optional(),
   status: z.string(),
   description: z.string(),

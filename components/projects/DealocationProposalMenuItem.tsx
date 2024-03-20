@@ -3,6 +3,7 @@ import { ProposalType } from '@/types';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useState } from 'react';
+import { Button } from '../ui/button';
 
 import axios from 'axios';
 import useDealocationProposalsByProjectId from '@/hooks/proposals/useDealocationProposalsByProjectId';
@@ -37,9 +38,16 @@ const DealocationProposalMenuItem = ({
       });
   };
 
+  const handleDeleteDeallocationProposal = () => {
+    axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_API}/DeallocationProposal/${proposalData?.id}`
+      )
+      .then((response) => mutateDeallocation());
+  };
   return (
     <>
-      <div className='flex justify-between'>
+      <div className='flex items-center justify-between'>
         <p>
           <span className='font-semibold'>Name: </span>
           {userData?.name}
@@ -56,6 +64,9 @@ const DealocationProposalMenuItem = ({
           />
           <Label htmlFor='airplane-mode'>Accept</Label>
         </div>
+        <Button onClick={handleDeleteDeallocationProposal} variant='ghost'>
+          Delete
+        </Button>
       </div>
     </>
   );

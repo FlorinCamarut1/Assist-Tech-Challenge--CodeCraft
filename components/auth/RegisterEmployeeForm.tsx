@@ -34,6 +34,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
   const params = useSearchParams();
 
   const inviteOrganizationId = params.get('invite');
+  const inviteOrganizationName = params.get('organization');
 
   const form = useForm<z.infer<typeof RegisterEmployeeSchema>>({
     resolver: zodResolver(RegisterEmployeeSchema),
@@ -61,7 +62,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
         }
       })
       .catch((error) => {
-        setError('Something went wrong!');
+        setError('This Email is already used!');
         setSuccess('');
       })
       .finally(() => setIsLoading(false));
@@ -74,7 +75,7 @@ const RegisterEmployeeForm = ({ className }: RegisterEmployeeFormProps) => {
           onSubmit={form.handleSubmit(formSubmitHandler)}
           className='flex w-auto flex-col gap-5'
         >
-          <FormHeader label='Register to an Organization' />
+          <FormHeader label={`Register to ${inviteOrganizationName}`} />
           <FormField
             control={form.control}
             name='name'

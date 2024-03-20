@@ -2,9 +2,11 @@
 
 import { UserType } from '@/types';
 import { getSystemRolesById } from '@/lib/getSystemRolesById';
+import { IoCloseSharp } from 'react-icons/io5';
 
 import useSystemRoles from '@/hooks/system-roles/useSystemRoles';
 import useUserModal from '@/hooks/users/useUserModal';
+import axios from 'axios';
 
 interface UserBoxProps {
   data: UserType;
@@ -14,6 +16,13 @@ const UserBox = ({ data, skillValidation }: UserBoxProps) => {
   const { data: systemRoles } = useSystemRoles();
   const rolesName = getSystemRolesById(systemRoles, data?.systemRoleIDs);
   const userModal = useUserModal();
+
+  const handleDeleteSystemRole = (systemRoleID: string) => {
+    axios.post(`${process.env.NEXT_PUBLIC_API}/User/RemoveSystemRole`, {
+      userID: data.id,
+      systemRoleID,
+    });
+  };
 
   return (
     <div>

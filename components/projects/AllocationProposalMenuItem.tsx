@@ -64,12 +64,28 @@ const AllocationProposalMenuItem = ({
         setIsDealocationg(false);
       });
   };
+
+  const handleDeleteAssignProposal = () => {
+    axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_API}/AssignmentProposal/${proposalData?.id}`
+      )
+      .then((response) => mutateAllocation());
+  };
   return (
     <>
-      <div className='flex justify-between'>
+      <div className='grid grid-cols-5 items-center'>
         <p>
           <span className='font-semibold'>Name: </span>
           {userData?.name}
+        </p>
+        <p>
+          <span className='font-semibold'>Work Hours: </span>
+          {proposalData?.workHours}
+        </p>
+        <p>
+          <span className='font-semibold'>Comments: </span>
+          {proposalData?.comments}
         </p>
 
         <div className='flex items-center space-x-2'>
@@ -80,6 +96,9 @@ const AllocationProposalMenuItem = ({
           />
           <Label htmlFor='airplane-mode'>Allocate/Dealocate</Label>
         </div>
+        <Button variant='ghost' onClick={handleDeleteAssignProposal}>
+          Delete
+        </Button>
       </div>
       {isDealocating && (
         <div className='flex gap-2'>

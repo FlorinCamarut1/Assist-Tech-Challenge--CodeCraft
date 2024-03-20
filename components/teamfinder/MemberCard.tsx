@@ -25,7 +25,7 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [projectRoles, setProjectRoles] = useState<any>([]);
-
+  const [comments, setComments] = useState('');
   const [workHours, setWorkHours] = useState(data?.workHours);
 
   // const convertRoleIdToName = (id: any) => {
@@ -57,6 +57,7 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
         workHours: workHours,
         teamRoleIDs: filteredProjectRolesArray,
         accepted: false,
+        comments: comments,
       })
       .then((response) => {
         setIsOpen(false);
@@ -93,12 +94,18 @@ const MemberCard = ({ data, projectData }: MemberCardProps) => {
             onChange={(value: any) => setProjectRoles(value)}
           />
           <div className='flex items-center justify-between'>
-            <div>
+            <div className='flex gap-1'>
               <p className='text-sm'>Work Hours</p>
               <Input
                 type='number'
                 value={workHours}
                 onChange={handleWorkHoursInput}
+              />
+              <Input
+                type='text'
+                placeholder='Comments'
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
               />
             </div>
             <Button onClick={handleSendProposal}>Assign</Button>

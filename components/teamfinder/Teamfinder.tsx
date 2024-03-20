@@ -20,6 +20,7 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [filteredData, setFilteredData] = useState([]);
   const [additionalContext, setAdditionalContext] = useState('');
+  const [jsonAiData, setJsonAiData] = useState('');
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
@@ -98,11 +99,17 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
         },
         additionalContext: additionalContext,
       })
-      .then((response) => setFilteredData(response?.data));
+      .then((response) => {
+        setFilteredData(response?.data?.teamFinderResponse);
+        console.log(response?.data?.chatGPTResponse);
+        console.log(
+          setJsonAiData(JSON.stringify(response?.data?.chatGPTResponse))
+        );
+      });
   };
 
   return (
-    <>
+    <div className='flex flex-col'>
       <div className='mt-4 space-y-2 rounded-md border-[1px] px-2 py-5'>
         <h1 className=' bg-code text-center font-Raleway text-xl font-bold text-codeCraft-900'>
           Team Finder
@@ -139,7 +146,8 @@ const Teamfinder = ({ projectData }: TeamfinderProps) => {
           />
         )}
       </div>
-    </>
+      <p>{jsonAiData}</p>
+    </div>
   );
 };
 

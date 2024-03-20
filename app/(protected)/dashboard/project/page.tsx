@@ -2,6 +2,7 @@
 import { getSession } from '@/actions/getSession';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { currentSystemRoles } from '@/lib/currentSystemRoles';
 
 import ProjectBox from '@/components/projects/ProjectBox';
 import PaginationSection from '@/components/ui/PaginationSection';
@@ -9,9 +10,7 @@ import PaginationSection from '@/components/ui/PaginationSection';
 import useProjects from '@/hooks/projects/useProjects';
 import AddProjectModal from '@/components/modals/AddProjectModal';
 import useCreateProjectModal from '@/hooks/projects/useCreateDepartmentModal';
-import TeamFinderFilterModal from '@/components/teamfinder/TeamFinderFilter';
 import useUserById from '@/hooks/users/useUserById';
-import { currentSystemRoles } from '@/lib/currentSystemRoles';
 
 const ProjectsPage = () => {
   const session = getSession();
@@ -19,7 +18,7 @@ const ProjectsPage = () => {
 
   const roles = currentSystemRoles(currentUser?.systemRoleIDs);
 
-  const { data } = useProjects(session?.organizationID);
+  const { data: data } = useProjects(currentUser?.organizationID);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(9);

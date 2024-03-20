@@ -54,7 +54,7 @@ const RegisterAdminForm = ({ className }: RegisterAdminFormProps) => {
         }
       })
       .catch((error) => {
-        setError(error.message);
+        setError('This Email is already used!');
         setSuccess('');
       })
       .finally(() => setIsLoading(false));

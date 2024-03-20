@@ -1,12 +1,12 @@
 'use client';
 
 import { SkillCategoryType } from '@/types';
+import { getSession } from '@/actions/getSession';
 
 import useSkillCategory from '@/hooks/skills/useSkillCategory';
 import React, { useState } from 'react';
 import SkillCategoryBox from './SkillCategoryBox';
 import PaginationSection from '../ui/PaginationSection';
-import { getSession } from '@/actions/getSession';
 
 const SkillsCategoryBox = () => {
   const session = getSession();

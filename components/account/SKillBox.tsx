@@ -15,7 +15,9 @@ interface SKillBox {
 }
 const SKillBox = ({ data, currentUser }: SKillBox) => {
   const session = getSession();
-  const role = currentSystemRoles(session?.systemRoleIDs);
+  const { data: currentUserData } = useUserById(session?.id);
+
+  const role = currentSystemRoles(currentUserData?.systemRoleIDs);
 
   const { mutate: mutateFetchedUserData } = useUserById(currentUser?.id);
   const { data: skillData, mutate: mutateFetchedSkill } = useSkillById(
@@ -74,13 +76,13 @@ const SKillBox = ({ data, currentUser }: SKillBox) => {
           </span>
         </p>
         <p className='font-semibold'>
-          Title:{' '}
+          Training/Course/Certification:{' '}
           <span className='font-normal text-codeCraft-500'>
             {data?.trainingTitle}
           </span>
         </p>
         <p className='font-semibold'>
-          Description:{' '}
+          Training/Course/Certification Description:{' '}
           <span className='font-normal text-codeCraft-500'>
             {data?.trainingDescription}
           </span>
@@ -109,6 +111,9 @@ const SKillBox = ({ data, currentUser }: SKillBox) => {
           </div>
         </div>
       )}
+      <Button variant='destructive' onClick={deleteSkill}>
+        Delete SKill
+      </Button>
     </div>
   );
 };

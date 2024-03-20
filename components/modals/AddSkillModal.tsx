@@ -52,7 +52,7 @@ const AddSkillModal = () => {
       experience: '0-6 months',
       trainingTitle: '',
       trainingDescription: '',
-      status: 'Accepted',
+      status: 'Pending',
     },
   });
 
@@ -72,7 +72,7 @@ const AddSkillModal = () => {
           accountModal.onClose();
         });
     } else {
-      setError('Skill already asigned!');
+      setError('Skill already assigned!');
       return;
     }
   };
@@ -171,7 +171,7 @@ const AddSkillModal = () => {
             name='trainingTitle'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Training Title</FormLabel>
+                <FormLabel>Training/Course/Certification</FormLabel>
                 <FormControl>
                   <Input placeholder='Training Title' {...field} />
                 </FormControl>
@@ -185,7 +185,7 @@ const AddSkillModal = () => {
             name='trainingDescription'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Training Description</FormLabel>
+                <FormLabel>Training/Course/Certification Description</FormLabel>
                 <FormControl>
                   <Input placeholder='Training Description' {...field} />
                 </FormControl>
